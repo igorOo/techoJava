@@ -27,24 +27,24 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 //        auth.jdbcAuthentication().dataSource(dataSource);
 //    }
 //
-////    @Override
-////    protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (2)
-////        User.UserBuilder users = User.withDefaultPasswordEncoder();
-////        auth.inMemoryAuthentication()
-////                .withUser(users.username("user1").password("pass1").roles("USER", "ADMIN"))
-////                .withUser(users.username("user2").password("pass2").roles("USER"));
-////    }
-//
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (2)
+//        User.UserBuilder users = User.withDefaultPasswordEncoder();
+//        auth.inMemoryAuthentication()
+//                .withUser(users.username("user1").password("pass1").roles("USER", "ADMIN"))
+//                .withUser(users.username("user2").password("pass2").roles("USER"));
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().permitAll()
-                .antMatchers("/secured/**").hasAnyRole("ADMIN")
-                .and()
-                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/authenticateTheUser")
-                .permitAll();
+                .anyRequest().permitAll();
+//                .antMatchers("/secured/**").hasAnyRole("ADMIN")
+//                .and()
+//                .formLogin()
+////                .loginPage("/login")
+////                .loginProcessingUrl("/authenticateTheUser")
+//                .permitAll();
     }
 }
 
