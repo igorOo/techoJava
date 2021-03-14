@@ -21,7 +21,7 @@ public class MainController {
     @GetMapping("/mainpage")
     public HashMap<String, Object> mainpage(@RequestParam(value = "author", required = false) boolean author){
         HashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("tops", postsService.findTopPosts(author));
+        result.put("tops", postsService.findAllPosts());
         return result;
     }
 

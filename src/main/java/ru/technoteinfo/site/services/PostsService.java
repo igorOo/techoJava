@@ -28,4 +28,8 @@ public class PostsService {
         }
         return result;
     }
+
+    public List<Posts> findAllPosts(){
+       return postsRepo.findAll();
+    }
 }
