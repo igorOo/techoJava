@@ -26,16 +26,20 @@ public class SubscribeController {
     }
 
     @RequestMapping(value = "/add", method=RequestMethod.POST)
-    public String subscribe(
+    public HashMap<String, Object> subscribe(
             @RequestParam(value = "email") String email,
             HttpServletRequest request
     ){
+        HashMap<String, Object> result = new LinkedHashMap<>();
         try {
             subscribeService.add(email, request.getRemoteAddr());
         }catch (SQLException e){
-            return e.getLocalizedMessage();
+            result.put("status", "error");
+            result.put("message", e.getLocalizedMessage());
+            return result;
         }
-        return "ok";
+        result.put("status", "success");
+        return result;
     }
 
     @ExceptionHandler(SQLException.class)
