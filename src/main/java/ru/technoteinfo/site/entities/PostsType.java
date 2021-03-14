@@ -16,7 +16,6 @@ public class PostsType {
     private Long id;
 
     @Column(name = "post_type")
-    @JoinColumn(name = "post_type")
     private int postType;
 
     @Column(name = "name")

@@ -44,7 +44,7 @@ public class User {
     @Column(name = "last_name")
     private String last_name;
 
-    @OneToOne(mappedBy = "social_type",fetch = FetchType.LAZY)
+    @OneToOne
     private SocialType social;
 
     @Column(name = "id_social")
