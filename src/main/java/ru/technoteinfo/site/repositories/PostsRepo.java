@@ -9,11 +9,10 @@ import java.util.List;
 public interface PostsRepo extends JpaRepository<Posts, Long> {
     @Query("select p.id, p.name, p.translit, p.main_image, p.type, p.date_create, " +
             "c1.name as category, c1.translit as cat_translit, p.category_id "+
-            " from posts as p " +
-            " left Join category as c1 on c1.id = p.category_id " +
-            " where p.public = 1 " +
+            " from Posts as p " +
+            " left Join Category as c1 " +
+            " where p.status = 1 " +
             " and c1.translit = 'gadgets' " +
-            " order by p.id desc "+
-            " limit 6")
+            " order by p.id desc ")
     List<Posts> findTopPosts();
 }

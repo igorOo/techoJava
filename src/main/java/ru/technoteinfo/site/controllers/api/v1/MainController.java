@@ -14,8 +14,8 @@ public class MainController {
     private PostsService postsService;
 
     @Autowired
-    public PostsService getPostsService() {
-        return postsService;
+    public void setPostsService(PostsService postsService) {
+        this.postsService = postsService;
     }
 
     @GetMapping("/mainpage")
@@ -24,4 +24,5 @@ public class MainController {
         result.put("tops", postsService.findTopPosts(author));
         return result;
     }
+
 }
