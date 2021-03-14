@@ -17,9 +17,8 @@ public class Category {
     @Column(name = "id")
     private BigInteger id;
 
-    @Column(name = "parent_id")
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "parent_id")
     private Category parent_id;
 
     @Column(name = "name", nullable = false)
@@ -34,7 +33,6 @@ public class Category {
     @Column(name = "public")
     private int status;
 
-    @Column(name = "author")
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
     private User author;
 
@@ -47,7 +45,6 @@ public class Category {
     @Column(name = "sort")
     private int sort;
 
-    @Column(name = "type_post")
     @OneToOne(mappedBy = "posts_type", fetch = FetchType.EAGER)
     private PostsType type_post;
 
