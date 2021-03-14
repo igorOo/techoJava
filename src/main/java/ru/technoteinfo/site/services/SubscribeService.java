@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.entities.Subscribe;
 import ru.technoteinfo.site.repositories.SubscribeRepo;
 
+import java.sql.SQLDataException;
+import java.sql.SQLException;
 import java.util.Date;
 
 @Service
@@ -19,11 +21,12 @@ public class SubscribeService {
         this.subscribeRepo = subscribeRepo;
     }
 
-    public void add(String email, String ip_address){
+    public void add(String email, String ip_address) throws SQLException{
         Subscribe subscribe = new Subscribe();
         subscribe.setEmail(email);
         subscribe.setIp_address(ip_address);
         subscribe.setDate(new Date());
         subscribeRepo.save(subscribe);
+
     }
 }
