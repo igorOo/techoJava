@@ -4,11 +4,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "`user`")
 public class User {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
+    @PrimaryKeyJoinColumn
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -45,6 +47,7 @@ public class User {
     private String last_name;
 
     @OneToOne
+    @JoinColumn(name = "social")
     private SocialType social;
 
     @Column(name = "id_social")

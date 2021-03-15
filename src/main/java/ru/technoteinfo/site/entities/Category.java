@@ -15,6 +15,7 @@ public class Category {
     @Id
     @GeneratedValue
     @Column(name = "id")
+    @PrimaryKeyJoinColumn
     private BigInteger id;
 
     @OneToOne

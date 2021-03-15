@@ -16,6 +16,7 @@ public class Posts {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "category_id")
     private Category category_id;
 
     private String name;
@@ -34,6 +35,7 @@ public class Posts {
     private String main_image;
 
     @OneToOne
+    @JoinColumn(name = "author")
     private User author;
 
     private int rating;
@@ -48,6 +50,7 @@ public class Posts {
     private int status;
 
     @OneToOne
+    @JoinColumn(name = "type")
     private PostsType type;
 
     private String post_vector;

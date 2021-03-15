@@ -14,7 +14,7 @@ public class SocialType {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @PrimaryKeyJoinColumn
     private Float id;
 
     @Column(name = "name")
