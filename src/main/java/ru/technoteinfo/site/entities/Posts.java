@@ -17,7 +17,7 @@ public class Posts {
 
     @OneToOne
     @JoinColumn(name = "category_id")
-    private Category category_id;
+    private Category category;
 
     private String name;
 

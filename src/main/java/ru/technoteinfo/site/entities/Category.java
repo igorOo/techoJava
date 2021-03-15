@@ -15,11 +15,12 @@ public class Category {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    @PrimaryKeyJoinColumn
-    private BigInteger id;
+
+    private Long id;
 
     @OneToOne
-    private Category parent_id;
+    @JoinColumn(name = "parent_id")
+    private Category parentCategory;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -34,6 +35,7 @@ public class Category {
     private int status;
 
     @ManyToOne
+    @JoinColumn(name = "author")
     private User author;
 
     @Column(name = "date_create")
@@ -46,6 +48,7 @@ public class Category {
     private int sort;
 
     @OneToOne
+    @JoinColumn(name = "type_post")
     private PostsType type_post;
 
 }

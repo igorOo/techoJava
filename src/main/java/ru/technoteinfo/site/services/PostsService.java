@@ -2,6 +2,7 @@ package ru.technoteinfo.site.services;
 
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.repositories.PostsRepo;
@@ -22,8 +23,8 @@ public class PostsService {
 
     public HashMap<String, Object> findTopPosts(boolean author){
         HashMap<String, Object> result = new LinkedHashMap<>();
-        List<Posts> list = postsRepo.findTopPosts();
-        for (int i=0; i<= result.size(); i++){
+        List<Posts> list = postsRepo.findTopPosts(PageRequest.of(0, 6));
+        for (int i=0; i<list.size(); i++){
             result.put(String.valueOf(i), list.get(i));
         }
         return result;
