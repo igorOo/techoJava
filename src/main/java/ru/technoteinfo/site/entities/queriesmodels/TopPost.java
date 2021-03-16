@@ -13,14 +13,14 @@ public class TopPost {
     private String name;
     private String translit;
     private String main_image;
-    private String type;
+    private Long type;
     private String date_create;
     private String category;
     private String cat_translit;
     private Long category_id;
     private String url;
 
-    public TopPost(Long id, String name, String translit, String main_image, String type,
+    public TopPost(Long id, String name, String translit, String main_image, Long type,
             Date date_create, String category, String cat_translit, Long category_id
     ){
         this.id = id;
@@ -34,7 +34,7 @@ public class TopPost {
         this.category_id = category_id;
     }
 
-    public TopPost(Long id, String name, String translit, String main_image, String type,
+    public TopPost(Long id, String name, String translit, String main_image, Long type,
                    Date date_create, String category, String cat_translit, Long category_id,
                    String url
     ){

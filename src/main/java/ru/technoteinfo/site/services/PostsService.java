@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.CategoryRepo;
@@ -14,8 +15,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.*;
 
 @Service
@@ -23,6 +28,9 @@ import java.util.*;
 public class PostsService {
     private PostsRepo postsRepo;
     private CategoryRepo categoryRepo;
+
+    @Autowired
+    private CommonController common;
 
     @Autowired
     public void setPostsRepo(PostsRepo postsRepo) {
@@ -39,7 +47,7 @@ public class PostsService {
         for (Object category: categories){
             Object[] obj = (Object[]) category;
             List<TopPost> posts = postsRepo.findTopPosts(PageRequest.of(0, 5), Long.valueOf(String.valueOf(obj[0])));
-            this.formatMeta(posts, request);
+            common.formatMeta(posts, request);
             result.put(String.valueOf(obj[0]), posts);
         }
 
@@ -50,17 +58,5 @@ public class PostsService {
        return postsRepo.findAll();
     }
 
-    private List<TopPost> formatMeta(List<TopPost> list, HttpServletRequest request){
-        for (TopPost item : list){
-            String image = item.getMain_image();
-            if (image != null){
-                item.setMain_image("https://"+request.getServerName()+"/images/post/"+item.getId()+"/"+image);
-            }
-            System.out.println(item.getDate_create());
-            LocalDate localDate = LocalDate.parse(item.getDate_create(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.A"));
-            DateTimeFormatter formmat1 = DateTimeFormatter.ofPattern("dd MMM uuuu");
-            item.setDate_create(formmat1.format(localDate));
-        }
-        return list;
-    }
+
 }

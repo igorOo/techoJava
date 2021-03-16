@@ -11,7 +11,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface PostsRepo extends JpaRepository<Posts, Long> {
-    @Query("select new ru.technoteinfo.site.entities.queriesmodels.TopPost(p.id, p.name, p.translit, p.main_image, p.type.name, p.date_create, " +
+    @Query("select new ru.technoteinfo.site.entities.queriesmodels.TopPost(p.id, p.name, p.translit, p.main_image, p.type.id, p.date_create, " +
             " p.category.name, p.category.translit, p.category.id)"+
             " from Posts p " +
             " where p.status = 1 " +
