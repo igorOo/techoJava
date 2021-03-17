@@ -42,11 +42,7 @@ public class PostsService {
 
         for (Object category: categories){
             Object[] obj = (Object[]) category;
-            List<TopPost> posts = postsRepo.findMainPosts(
-                    Long.valueOf(String.valueOf(obj[0])),
-                    author,
-                    5
-            );
+            List<TopPost> posts = postsRepo.findMainPosts(Long.valueOf(String.valueOf(obj[0])), author,5);
             common.formatMeta(posts);
             result.put(String.valueOf(obj[0]), posts);
         }
