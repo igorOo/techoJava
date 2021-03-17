@@ -14,8 +14,7 @@ public class Category {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
-
+    @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
     @OneToOne

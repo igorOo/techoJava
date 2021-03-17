@@ -9,8 +9,8 @@ public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
     @PrimaryKeyJoinColumn
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @Column(name = "name", nullable = false)

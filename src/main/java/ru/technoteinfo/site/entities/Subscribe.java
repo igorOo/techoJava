@@ -15,8 +15,8 @@ public class Subscribe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private BigInteger id;
+    @Column(columnDefinition = "serial")
+    private Long id;
 
     @Column(name = "email")
     private String email;

@@ -13,12 +13,8 @@ import java.util.LinkedHashMap;
 
 @RestController
 public class MainController {
-    private PostsService postsService;
-
     @Autowired
-    public void setPostsService(PostsService postsService) {
-        this.postsService = postsService;
-    }
+    private PostsService postsService;
 
     @GetMapping("/mainpage")
     public HashMap<String, Object> mainpage(@RequestParam(value = "author", required = false) boolean author, HttpServletRequest request){

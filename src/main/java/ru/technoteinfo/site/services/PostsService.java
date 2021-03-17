@@ -10,6 +10,7 @@ import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.CategoryRepo;
 import ru.technoteinfo.site.repositories.PostsRepo;
+import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,19 +27,14 @@ import java.util.*;
 @Service
 @NoArgsConstructor
 public class PostsService {
-    private PostsRepo postsRepo;
+    @Autowired
+    private PostsRepoImpl postsRepo;
+
+    @Autowired
     private CategoryRepo categoryRepo;
 
     @Autowired
     private CommonController common;
-
-    @Autowired
-    public void setPostsRepo(PostsRepo postsRepo) {
-        this.postsRepo = postsRepo;
-    }
-
-    @Autowired
-    public void setCategoryRepo(CategoryRepo categoryRepo) { this.categoryRepo = categoryRepo; }
 
     public HashMap<String, List<TopPost>> findTopPosts(boolean author, HttpServletRequest request){
         HashMap<String, List<TopPost>> result = new LinkedHashMap<>();
@@ -54,9 +50,10 @@ public class PostsService {
         return result;
     }
 
-    public List<Posts> findAllPosts(){
-       return postsRepo.findAll();
-    }
+    public List<TopPost> findGadgetPosts(boolean author){
+        List<TopPost> result = new ArrayList<>();
 
+        return result;
+    }
 
 }

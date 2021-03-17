@@ -13,6 +13,7 @@ public class PostsType {
 
     @Id
     @GeneratedValue
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @Column(name = "post_type")

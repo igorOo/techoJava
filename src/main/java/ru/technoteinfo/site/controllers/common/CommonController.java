@@ -24,11 +24,17 @@ public class CommonController {
     @Value("${site.security}")
     private String urlSecurity;
 
+    @Value("${site.domainImage}")
+    private String domainImage;
+
+    @Value("${site.securityImage}")
+    private String securityImage;
+
     public List<TopPost> formatMeta(List<TopPost> list, HttpServletRequest request){
         for (TopPost item : list){
             String image = item.getMain_image();
             if (image != null){
-                item.setMain_image(urlSecurity+"://"+urlDomain+"/images/post/"+item.getId()+"/"+image);
+                item.setMain_image(securityImage+"://"+domainImage+"/images/post/"+item.getId()+"/"+image);
             }
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
             try {

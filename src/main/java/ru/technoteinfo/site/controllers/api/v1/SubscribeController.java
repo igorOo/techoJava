@@ -17,13 +17,8 @@ import java.util.Map;
 @RestController
 @RequestMapping(value="/subscribe")
 public class SubscribeController {
-
-    private SubscribeService subscribeService;
-
     @Autowired
-    public void setSubscribeService(SubscribeService subscribeService) {
-        this.subscribeService = subscribeService;
-    }
+    private SubscribeService subscribeService;
 
     @RequestMapping(value = "/add", method=RequestMethod.POST)
     public HashMap<String, Object> subscribe(

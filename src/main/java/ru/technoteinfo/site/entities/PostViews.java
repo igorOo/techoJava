@@ -12,6 +12,7 @@ public class PostViews {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @OneToOne

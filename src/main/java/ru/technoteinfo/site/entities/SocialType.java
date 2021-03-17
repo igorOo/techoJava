@@ -15,7 +15,8 @@ public class SocialType {
     @Id
     @GeneratedValue
     @PrimaryKeyJoinColumn
-    private Float id;
+    @Column(columnDefinition = "serial")
+    private Long id;
 
     @Column(name = "name")
     private String name;
