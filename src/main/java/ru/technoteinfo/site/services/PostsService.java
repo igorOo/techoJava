@@ -56,6 +56,7 @@ public class PostsService {
 
     public List<TopPost> findGadgetPosts(boolean author, String translit){
         List<TopPost> result = postsRepo.findMainPosts(translit, author, 6);
+        common.formatMeta(result);
         return result;
     }
 
