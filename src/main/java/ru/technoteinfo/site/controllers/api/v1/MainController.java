@@ -17,9 +17,10 @@ public class MainController {
     private PostsService postsService;
 
     @GetMapping("/mainpage")
-    public HashMap<String, Object> mainpage(@RequestParam(value = "author", required = false) boolean author, HttpServletRequest request){
+    public HashMap<String, Object> mainpage(@RequestParam(value = "author", required = false) boolean author){
         HashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("tops", postsService.findTopPosts(author, request));
+        result.put("tops", postsService.findTopPosts(author));
+        result.put("gadgets", postsService.findGadgetPosts(author, "gadgets"));
         return result;
     }
 

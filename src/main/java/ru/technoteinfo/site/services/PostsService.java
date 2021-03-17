@@ -36,23 +36,26 @@ public class PostsService {
     @Autowired
     private CommonController common;
 
-    public HashMap<String, List<TopPost>> findTopPosts(boolean author, HttpServletRequest request){
+    public HashMap<String, List<TopPost>> findTopPosts(boolean author){
         HashMap<String, List<TopPost>> result = new LinkedHashMap<>();
         List<Object> categories = categoryRepo.findTopViewCategories();
 
         for (Object category: categories){
             Object[] obj = (Object[]) category;
-            List<TopPost> posts = postsRepo.findTopPosts(PageRequest.of(0, 5), Long.valueOf(String.valueOf(obj[0])));
-            common.formatMeta(posts, request);
+            List<TopPost> posts = postsRepo.findMainPosts(
+                    Long.valueOf(String.valueOf(obj[0])),
+                    author,
+                    5
+            );
+            common.formatMeta(posts);
             result.put(String.valueOf(obj[0]), posts);
         }
 
         return result;
     }
 
-    public List<TopPost> findGadgetPosts(boolean author){
-        List<TopPost> result = new ArrayList<>();
-
+    public List<TopPost> findGadgetPosts(boolean author, String translit){
+        List<TopPost> result = postsRepo.findMainPosts(translit, author, 6);
         return result;
     }
 

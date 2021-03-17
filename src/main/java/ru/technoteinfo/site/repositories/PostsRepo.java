@@ -11,6 +11,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface PostsRepo {
-    List<TopPost> findTopPosts(Pageable pageable, @Param("id") Long id);
-    List<TopPost> findGadgetsPosts(Pageable pageable);
+    List<TopPost> findMainPosts(Long id, boolean author, int limit);
+    List<TopPost> findMainPosts(String translit, boolean author, int limit);
 }

@@ -30,7 +30,7 @@ public class CommonController {
     @Value("${site.securityImage}")
     private String securityImage;
 
-    public List<TopPost> formatMeta(List<TopPost> list, HttpServletRequest request){
+    public List<TopPost> formatMeta(List<TopPost> list){
         for (TopPost item : list){
             String image = item.getMain_image();
             if (image != null){

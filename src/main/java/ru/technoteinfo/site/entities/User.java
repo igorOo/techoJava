@@ -1,9 +1,14 @@
 package ru.technoteinfo.site.entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "`user`")
 public class User {
 
@@ -41,10 +46,10 @@ public class User {
     private GenderEnum gender;
 
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
 
     @OneToOne
     @JoinColumn(name = "social")

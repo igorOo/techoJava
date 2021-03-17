@@ -19,6 +19,8 @@ public class TopPost {
     private String cat_translit;
     private Long category_id;
     private String url;
+    private String first_name;
+    private String last_name;
 
     public TopPost(Long id, String name, String translit, String main_image, Long type,
             Date date_create, String category, String cat_translit, Long category_id
