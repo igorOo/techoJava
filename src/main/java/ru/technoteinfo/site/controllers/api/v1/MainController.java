@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class MainController {
     @Autowired
     private PostsService postsService;
