@@ -17,7 +17,7 @@ public class PostsType {
     private Long id;
 
     @Column(name = "post_type")
-    private int postType;
+    private Long postType;
 
     @Column(name = "name")
     private String name;
