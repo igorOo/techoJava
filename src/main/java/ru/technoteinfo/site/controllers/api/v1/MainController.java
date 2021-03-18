@@ -1,10 +1,7 @@
 package ru.technoteinfo.site.controllers.api.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.services.PostsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +25,11 @@ public class MainController {
         HashMap<String, Object> result = new LinkedHashMap<>();
         result.put("tops", postsService.findTopPosts(author));
         result.put("gadgets", postsService.findGadgetPosts(author, "gadgets"));
-        result.put("interandprogs", postsService.findInterAndProgsPosts(author, new String[] {"programs", "internet"}));
+        result.put("interandprogs", postsService.findTwoCategoryPosts(author, new String[] {"programs", "internet"}, 6));
         result.put("hardware", postsService.findHardwarePosts(author, "hardware"));
         result.put("articles", postsService.findArticles(page, author));
+        result.put("games", postsService.findGamesPosts(author, "games"));
+        result.put("worldcar", postsService.findTwoCategoryPosts(author, new String[] {"auto", "in-world"}, 3));
         return result;
     }
 

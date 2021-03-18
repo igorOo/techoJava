@@ -12,6 +12,7 @@ public class TopPost {
     private Long id;
     private String name;
     private String translit;
+    private String preview;
     private String main_image;
     private Long type;
     private String date_create;

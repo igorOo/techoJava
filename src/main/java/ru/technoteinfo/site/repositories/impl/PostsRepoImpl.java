@@ -29,28 +29,28 @@ public class PostsRepoImpl implements PostsRepo {
 
 
     @Override
-    public List<TopPost> findMainPosts(Long id, boolean author, int limit) {
-        return getMainPostsWithId(id, author, limit, 0);
+    public List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit) {
+        return getMainPostsWithId(id, author, preview, limit, 0);
     }
 
     @Override
-    public List<TopPost> findMainPosts(String translit, boolean author, int limit) {
-        return getMainPostsTranslit(translit, author, limit, 0);
+    public List<TopPost> findMainPosts(String translit, boolean author, boolean preview, int limit) {
+        return getMainPostsTranslit(translit, author, preview, limit, 0);
     }
 
     @Override
-    public List<TopPost> findMainPosts(Long id, boolean author, int limit, int start) {
-        return getMainPostsWithId(id, author, limit, start);
+    public List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit, int start) {
+        return getMainPostsWithId(id, author, preview, limit, start);
     }
 
     @Override
-    public List<TopPost> findMainPosts(String translit, boolean author, int limit, int start) {
-        return getMainPostsTranslit(translit, author, limit, start);
+    public List<TopPost> findMainPosts(String translit, boolean author, boolean preview, int limit, int start) {
+        return getMainPostsTranslit(translit, author, preview, limit, start);
     }
 
     @Override
-    public List<TopPost> findPostsbyType(Long type, boolean author, int limit, int start){
-        return getPostsByType(type, author, limit, start);
+    public List<TopPost> findPostsbyType(Long type, boolean author, boolean preview, int limit, int start){
+        return getPostsByType(type, author, preview, limit, start);
     }
 
     public Integer getCountPostsByType(Long typePost){
@@ -65,7 +65,7 @@ public class PostsRepoImpl implements PostsRepo {
         }
     }
 
-    private List<TopPost> getMainPostsTranslit(String translit, boolean author, int limit, int start) {
+    private List<TopPost> getMainPostsTranslit(String translit, boolean author, boolean preview, int limit, int start) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Posts> query = cb.createQuery(Posts.class);
         Root<Posts> posts = query.from(Posts.class);
@@ -106,13 +106,16 @@ public class PostsRepoImpl implements PostsRepo {
                 topPost.setFirst_name(item.getAuthor().getFirstName());
                 topPost.setLast_name(item.getAuthor().getLastName());
             }
+            if (preview){
+                topPost.setPreview(item.getPreview());
+            }
             result.add(topPost);
         }
 
         return result;
     }
 
-    private List<TopPost> getMainPostsWithId(Long id, boolean author, int limit, int start){
+    private List<TopPost> getMainPostsWithId(Long id, boolean author, boolean preview, int limit, int start){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Posts> query = cb.createQuery(Posts.class);
         Root<Posts> posts = query.from(Posts.class);
@@ -153,13 +156,16 @@ public class PostsRepoImpl implements PostsRepo {
                 topPost.setFirst_name(item.getAuthor().getFirstName());
                 topPost.setLast_name(item.getAuthor().getLastName());
             }
+            if (preview){
+                topPost.setPreview(item.getPreview());
+            }
             result.add(topPost);
         }
 
         return result;
     }
 
-    private List<TopPost> getPostsByType(Long type, boolean author, int limit, int start){
+    private List<TopPost> getPostsByType(Long type, boolean author, boolean preview, int limit, int start){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Posts> query = cb.createQuery(Posts.class);
         Root<Posts> posts = query.from(Posts.class);
@@ -199,6 +205,9 @@ public class PostsRepoImpl implements PostsRepo {
             if (author){
                 topPost.setFirst_name(item.getAuthor().getFirstName());
                 topPost.setLast_name(item.getAuthor().getLastName());
+            }
+            if (preview){
+                topPost.setPreview(item.getPreview());
             }
             result.add(topPost);
         }

@@ -11,9 +11,9 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface PostsRepo {
-    List<TopPost> findMainPosts(Long id, boolean author, int limit);
-    List<TopPost> findMainPosts(String translit, boolean author, int limit);
-    List<TopPost> findMainPosts(Long id, boolean author, int limit, int start);
-    List<TopPost> findMainPosts(String translit, boolean author, int limit, int start);
-    List<TopPost> findPostsbyType(Long type, boolean author, int limit, int start);
+    List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit);
+    List<TopPost> findMainPosts(String translit, boolean author, boolean preview, int limit);
+    List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit, int start);
+    List<TopPost> findMainPosts(String translit, boolean author, boolean preview, int limit, int start);
+    List<TopPost> findPostsbyType(Long type, boolean author, boolean preview, int limit, int start);
 }
