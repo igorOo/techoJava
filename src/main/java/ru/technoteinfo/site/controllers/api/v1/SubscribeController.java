@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.services.SubscribeService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -24,14 +26,17 @@ public class SubscribeController {
     @RequestMapping(value = "/add", method=RequestMethod.POST)
     public HashMap<String, Object> subscribe(
             @RequestParam(value = "email") String email,
-            HttpServletRequest request
+            @RequestParam(value = "fuckingBot") String bot,
+            HttpServletRequest request,
+            HttpServletResponse response
     ){
         HashMap<String, Object> result = new LinkedHashMap<>();
         try {
             subscribeService.add(email, request.getRemoteAddr());
-        }catch (SQLException e){
+        }catch (Exception e){
             result.put("status", "error");
-            result.put("message", e.getLocalizedMessage());
+            result.put("message", "Не удалось выполнить подписку на рассылку");
+            response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
             return result;
         }
         result.put("status", "success");
