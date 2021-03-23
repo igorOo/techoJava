@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
+import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,5 +61,20 @@ public class CommonController {
             item.setUrl(urlSecurity+"://"+urlDomain+"/"+typeString+"/"+item.getTranslit());
         }
         return list;
+    }
+
+    public Posts formatMetaPost(Posts post){
+            String image = post.getMain_image();
+            if (image != null){
+                post.setMain_image(securityImage+"://"+domainImage+"/images/post/"+post.getId()+"/"+image);
+            }
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            try {
+                Date date =  df.parse(post.getDate_create());
+                SimpleDateFormat formmat1 = new SimpleDateFormat("dd MMMM yyyy");
+                post.setDate_create(formmat1.format(post.getDate_create()));
+            }catch (ParseException e){
+            }
+        return post;
     }
 }

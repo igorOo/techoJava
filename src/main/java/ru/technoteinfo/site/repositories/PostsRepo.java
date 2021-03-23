@@ -16,4 +16,6 @@ public interface PostsRepo {
     List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit, int start);
     List<TopPost> findMainPosts(String translit, boolean author, boolean preview, int limit, int start);
     List<TopPost> findPostsbyType(Long type, boolean author, boolean preview, int limit, int start);
+
+    Posts findPostByTranslit(String translit, boolean author, boolean meta);
 }

@@ -24,21 +24,21 @@ public class TopPost {
     private String last_name;
 
     public TopPost(Long id, String name, String translit, String main_image, Long type,
-            Date date_create, String category, String cat_translit, Long category_id
+            String date_create, String category, String cat_translit, Long category_id
     ){
         this.id = id;
         this.name = name;
         this.translit = translit;
         this.main_image = main_image;
         this.type = type;
-        this.date_create = date_create.toString();
+        this.date_create = date_create;
         this.category = category;
         this.cat_translit = cat_translit;
         this.category_id = category_id;
     }
 
     public TopPost(Long id, String name, String translit, String main_image, Long type,
-                   Date date_create, String category, String cat_translit, Long category_id,
+                   String date_create, String category, String cat_translit, Long category_id,
                    String url
     ){
         this.id = id;
@@ -46,7 +46,7 @@ public class TopPost {
         this.translit = translit;
         this.main_image = main_image;
         this.type = type;
-        this.date_create = date_create.toString();
+        this.date_create = date_create;
         this.category = category;
         this.cat_translit = cat_translit;
         this.category_id = category_id;

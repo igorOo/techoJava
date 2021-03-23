@@ -1,10 +1,5 @@
 package ru.technoteinfo.site.repositories.impl;
 
-import lombok.Value;
-import lombok.extern.java.Log;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.technoteinfo.site.entities.Category;
 import ru.technoteinfo.site.entities.Posts;
@@ -16,9 +11,7 @@ import ru.technoteinfo.site.repositories.PostsRepo;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +44,13 @@ public class PostsRepoImpl implements PostsRepo {
     @Override
     public List<TopPost> findPostsbyType(Long type, boolean author, boolean preview, int limit, int start){
         return getPostsByType(type, author, preview, limit, start);
+    }
+
+    @Override
+    public Posts findPostByTranslit(String translit, boolean author, boolean meta){
+        Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.translit = :translit")
+                .setParameter("translit", translit).getSingleResult();
+        return post;
     }
 
     public Integer getCountPostsByType(Long typePost){
@@ -214,4 +214,6 @@ public class PostsRepoImpl implements PostsRepo {
 
         return result;
     }
+
+
 }
