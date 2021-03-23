@@ -9,6 +9,7 @@ import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -76,5 +77,10 @@ public class Posts {
 
     @JsonIgnore
     private String post_vector;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @Column(insertable = false, updatable = false)
+    @JsonView(JsonViewer.ExtendedPublic.class)
+    transient private List<PostsTags> tags;
 
 }
