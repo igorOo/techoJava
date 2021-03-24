@@ -1,10 +1,7 @@
 package ru.technoteinfo.site.repositories.impl;
 
 import org.springframework.stereotype.Repository;
-import ru.technoteinfo.site.entities.Category;
-import ru.technoteinfo.site.entities.Posts;
-import ru.technoteinfo.site.entities.PostsType;
-import ru.technoteinfo.site.entities.User;
+import ru.technoteinfo.site.entities.*;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.PostsRepo;
 
@@ -50,6 +47,14 @@ public class PostsRepoImpl implements PostsRepo {
     public Posts findPostByTranslit(String translit, boolean author, boolean meta){
         Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.translit = :translit")
                 .setParameter("translit", translit).getSingleResult();
+        if (author == false){
+            post.setAuthor(null);
+        }
+        List<PostsTags> tags = entityManager.createQuery("select tg from PostsTags tg where tg.post.id = :post_id")
+                .setParameter("post_id", post.getId()).getResultList();
+        if (tags != null){
+            post.setTags(tags);
+        }
         return post;
     }
 

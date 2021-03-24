@@ -20,8 +20,11 @@ public class NewController {
             method = RequestMethod.GET,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @JsonView(JsonViewer.ExtendedPublic.class)
-    public Posts getPostByTranslit(@PathVariable("translit") String translit){
-        Posts news = newsService.findNewByTranslit(translit, false, false);
+    public Posts getPostByTranslit(
+            @PathVariable("translit") String translit,
+            @RequestParam(value = "author", required = false) boolean author
+    ){
+        Posts news = newsService.findNewByTranslit(translit, author, false);
         return news;
     }
 }

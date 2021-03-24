@@ -78,7 +78,7 @@ public class Posts {
     @JsonIgnore
     private String post_vector;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @Column(insertable = false, updatable = false)
     @JsonView(JsonViewer.ExtendedPublic.class)
     transient private List<PostsTags> tags;

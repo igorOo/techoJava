@@ -1,7 +1,9 @@
 package ru.technoteinfo.site.entities;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +22,7 @@ public class PostsTags {
     private Posts post;
 
     @Column(name = "tags", insertable = false, updatable = false)
+    @JsonView(JsonViewer.ExtendedPublic.class)
     private String tag;
 }
 

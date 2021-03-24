@@ -68,12 +68,13 @@ public class CommonController {
             if (image != null){
                 post.setMain_image(securityImage+"://"+domainImage+"/images/post/"+post.getId()+"/"+image);
             }
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 Date date =  df.parse(post.getDate_create());
                 SimpleDateFormat formmat1 = new SimpleDateFormat("dd MMMM yyyy");
-                post.setDate_create(formmat1.format(post.getDate_create()));
+                post.setDate_create(formmat1.format(date));
             }catch (ParseException e){
+                System.out.println(e);
             }
         return post;
     }
