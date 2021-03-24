@@ -64,4 +64,6 @@ public class Category {
     @JsonView(JsonViewer.Internal.class)
     private PostsType type_post;
 
+    @JsonView(JsonViewer.Public.class)
+    private transient String url;
 }

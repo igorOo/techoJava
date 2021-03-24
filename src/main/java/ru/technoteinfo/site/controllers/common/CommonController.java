@@ -68,6 +68,23 @@ public class CommonController {
             if (image != null){
                 post.setMain_image(securityImage+"://"+domainImage+"/images/post/"+post.getId()+"/"+image);
             }
+            if (post.getCategory() != null){
+                StringBuilder url = new StringBuilder();
+                url.append(urlSecurity+"://"+urlDomain);
+                switch (post.getCategory().getType_post().getPostType().intValue()){
+                    case 1:
+                        url.append("/news/category");
+                        break;
+                    case 2:
+                        url.append("/notes/category");
+                        break;
+                    case 3:
+                        url.append("/gallery/category");
+                        break;
+                }
+                url.append("/"+post.getCategory().getTranslit());
+                post.getCategory().setUrl(url.toString());
+            }
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 Date date =  df.parse(post.getDate_create());
