@@ -16,7 +16,7 @@ public interface PostsRepo {
     List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit, int start);
     List<TopPost> findMainPosts(String translit, boolean author, boolean preview, int limit, int start);
     List<TopPost> findPostsbyType(Long type, boolean author, boolean preview, int limit, int start);
-    List<TopPost> findSimilarPosts(String translit, boolean author, boolean preview, int count, int type_post);
+    List<TopPost> findSimilarPosts(String translit, boolean author, boolean preview, int count, Long type_post);
 
     Posts findPostByTranslit(String translit, boolean author, boolean meta);
 }

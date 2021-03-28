@@ -72,7 +72,7 @@ public class PostsRepoImpl implements PostsRepo {
         }
     }
 
-    public List<TopPost> findSimilarPosts(String translit, boolean author, boolean preview, int count, int type_post){
+    public List<TopPost> findSimilarPosts(String translit, boolean author, boolean preview, int count, Long type_post){
         if (count == 0){
             count = 3;
         }

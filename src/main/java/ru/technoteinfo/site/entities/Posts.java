@@ -9,13 +9,14 @@ import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Posts {
+public class Posts implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

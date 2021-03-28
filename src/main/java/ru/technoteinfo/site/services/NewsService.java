@@ -27,7 +27,7 @@ public class NewsService {
     }
 
     public List<TopPost> findSimilarPosts(String category){
-        List<TopPost> list = postsRepo.findSimilarPosts(category, false, false, 3, 1);
+        List<TopPost> list = postsRepo.findSimilarPosts(category, false, false, 3, 1L);
         common.formatMeta(list);
         return list;
     }

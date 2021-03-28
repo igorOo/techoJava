@@ -1,9 +1,9 @@
 package ru.technoteinfo.site.controllers.api.v1;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import ru.technoteinfo.site.entities.StatisticPostRead;
+import ru.technoteinfo.site.services.StatisticService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin(origins = "*")
 @RequestMapping("/metrika")
 public class StatisticController {
+    @Autowired
+    private StatisticService statisticService;
 
-    @RequestMapping("/add-time-read-post/{post_id}/{time}")
+    @RequestMapping(value = "/add-time-read-post", method = RequestMethod.POST)
     public void SetStatisticReadPost(
-            @PathVariable("post_id") Long postId,
-            @PathVariable("time") Float time,
+            @RequestBody StatisticPostRead body,
             HttpServletRequest request
     ){
-
+       statisticService.savePostReadTime(body, request.getRemoteAddr());
     }
 }
