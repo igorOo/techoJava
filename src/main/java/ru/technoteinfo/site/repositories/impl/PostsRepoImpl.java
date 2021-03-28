@@ -8,8 +8,10 @@ import ru.technoteinfo.site.repositories.PostsRepo;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -68,6 +70,23 @@ public class PostsRepoImpl implements PostsRepo {
         } catch (RuntimeException re) {
             return 0;
         }
+    }
+
+    public List<TopPost> findSimilarPosts(String translit, boolean author, boolean preview, int count, int type_post){
+        if (count == 0){
+            count = 3;
+        }
+        List<Posts> list = entityManager.createQuery("select p1 from Posts p1 " +
+                                            "where p1.category.translit=:translit and p1.type.postType = :postType order by random()")
+                .setParameter("translit", translit)
+                .setParameter("postType", type_post)
+                .setMaxResults(count)
+                .getResultList();
+        List<TopPost> result = new LinkedList<>();
+        for (Posts item : list){
+            result.add(item.toTopPost(author, preview));
+        }
+        return result;
     }
 
     private List<TopPost> getMainPostsTranslit(String translit, boolean author, boolean preview, int limit, int start) {

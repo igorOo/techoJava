@@ -37,7 +37,7 @@ public class CommonController {
             if (image != null){
                 item.setMain_image(securityImage+"://"+domainImage+"/images/post/"+item.getId()+"/"+image);
             }
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
 
                 Date date =  df.parse(item.getDate_create());

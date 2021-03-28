@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.PostsTags;
+import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
 
 import java.util.List;
@@ -23,5 +24,11 @@ public class NewsService {
         Posts post = postsRepo.findPostByTranslit(translit, author, meta);
         common.formatMetaPost(post);
         return post;
+    }
+
+    public List<TopPost> findSimilarPosts(String category){
+        List<TopPost> list = postsRepo.findSimilarPosts(category, false, false, 3, 1);
+        common.formatMeta(list);
+        return list;
     }
 }

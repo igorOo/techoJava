@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
+import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -82,5 +83,43 @@ public class Posts {
     @Column(insertable = false, updatable = false)
     @JsonView(JsonViewer.ExtendedPublic.class)
     transient private List<PostsTags> tags;
+
+
+    public TopPost toTopPost(){
+        TopPost topPost = new TopPost(
+                this.getId(),
+                this.getName(),
+                this.getTranslit(),
+                this.getMain_image(),
+                this.getType().getPostType(),
+                this.getDate_create(),
+                this.getCategory().getName(),
+                this.getCategory().getTranslit(),
+                this.getCategory().getId()
+        );
+        return topPost;
+    }
+
+    public TopPost toTopPost(boolean author, boolean preview){
+        TopPost topPost = new TopPost(
+                this.getId(),
+                this.getName(),
+                this.getTranslit(),
+                this.getMain_image(),
+                this.getType().getPostType(),
+                this.getDate_create(),
+                this.getCategory().getName(),
+                this.getCategory().getTranslit(),
+                this.getCategory().getId()
+        );
+        if (author){
+            topPost.setFirst_name(this.getAuthor().getFirstName());
+            topPost.setLast_name(this.getAuthor().getLastName());
+        }
+        if (preview){
+            topPost.setPreview(this.getPreview());
+        }
+        return topPost;
+    }
 
 }

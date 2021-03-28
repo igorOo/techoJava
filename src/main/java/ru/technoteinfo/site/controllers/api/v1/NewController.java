@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
+import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.services.NewsService;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -26,5 +29,12 @@ public class NewController {
     ){
         Posts news = newsService.findNewByTranslit(translit, author, false);
         return news;
+    }
+
+    @RequestMapping(value = "/similar-posts/{category}")
+    public List<TopPost> getSimilarPosts(
+            @PathVariable("category") String category
+    ){
+        return newsService.findSimilarPosts(category);
     }
 }
