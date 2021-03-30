@@ -90,15 +90,15 @@ public class PostsRepoImpl implements PostsRepo {
         if (count == 0){
             count = 3;
         }
-        List<StatisticPostRead> list = entityManager.createQuery("select cast(avg(pr1.timeRead) as int) as time_read, pr1 from StatisticPostRead pr1 " +
+        List<Object[]> list = entityManager.createQuery("select cast(avg(pr1.timeRead) as int) as time_read, pr1 from StatisticPostRead pr1 " +
                 "where pr1.post.type.postType=:postType GROUP BY pr1.post.id, pr1.id")
                 .setParameter("postType", typePost)
                 .setMaxResults(count)
                 .getResultList();
         List<TopPost> result = new LinkedList<>();
-        for (StatisticPostRead item: list){
-            String i = "i";
-            //result.add(item.getPost().toTopPost());
+        for (Object[] item: list){
+            StatisticPostRead postRead = (StatisticPostRead) item[1];
+            result.add(postRead.getPost().toTopPost());
         }
         return result;
     }
