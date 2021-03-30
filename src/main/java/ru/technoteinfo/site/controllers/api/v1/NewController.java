@@ -10,6 +10,8 @@ import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.services.NewsService;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -31,10 +33,14 @@ public class NewController {
         return news;
     }
 
-    @RequestMapping(value = "/similar-posts/{category}")
-    public List<TopPost> getSimilarPosts(
-            @PathVariable("category") String category
+    @RequestMapping(value = "/get-other-posts/{category}/{post_id}")
+    public HashMap<String, Object> getSimilarPosts(
+            @PathVariable("category") String category,
+            @PathVariable("post_id") Long postId
     ){
-        return newsService.findSimilarPosts(category);
+        HashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("similar-posts", newsService.findSimilarPosts(category));
+        result.put("top-reader-posts", newsService.findTopReaderPosts());
+        return result;
     }
 }

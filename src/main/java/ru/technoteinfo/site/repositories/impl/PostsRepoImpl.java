@@ -5,14 +5,11 @@ import ru.technoteinfo.site.entities.*;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.PostsRepo;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.lang.reflect.Field;
 
 @Repository
 public class PostsRepoImpl implements PostsRepo {
@@ -85,6 +82,23 @@ public class PostsRepoImpl implements PostsRepo {
         List<TopPost> result = new LinkedList<>();
         for (Posts item : list){
             result.add(item.toTopPost(author, preview));
+        }
+        return result;
+    }
+
+    public List<TopPost> findTopReaderPosts(boolean author, boolean preview, int count, Long typePost){
+        if (count == 0){
+            count = 3;
+        }
+        List<StatisticPostRead> list = entityManager.createQuery("select cast(avg(pr1.timeRead) as int) as time_read, pr1 from StatisticPostRead pr1 " +
+                "where pr1.post.type.postType=:postType GROUP BY pr1.post.id, pr1.id")
+                .setParameter("postType", typePost)
+                .setMaxResults(count)
+                .getResultList();
+        List<TopPost> result = new LinkedList<>();
+        for (StatisticPostRead item: list){
+            String i = "i";
+            //result.add(item.getPost().toTopPost());
         }
         return result;
     }
@@ -239,5 +253,14 @@ public class PostsRepoImpl implements PostsRepo {
         return result;
     }
 
+
+//    public static Map<String, Object> parameters(Object obj) {
+//        Map<String, Object> map = new HashMap<>();
+//        for (Field field : obj.getClass().getDeclaredFields()) {
+//            field.setAccessible(true);
+//            try { map.put(field.getName(), field.get(obj)); } catch (Exception e) { }
+//        }
+//        return map;
+//    }
 
 }

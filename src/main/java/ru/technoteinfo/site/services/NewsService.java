@@ -31,4 +31,10 @@ public class NewsService {
         common.formatMeta(list);
         return list;
     }
+
+    public List<TopPost> findTopReaderPosts(){
+        List<TopPost> list = postsRepo.findTopReaderPosts(false, false, 6, 1L);
+        common.formatMeta(list);
+        return list;
+    }
 }
