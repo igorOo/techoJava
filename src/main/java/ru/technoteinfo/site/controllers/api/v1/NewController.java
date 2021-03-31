@@ -24,7 +24,7 @@ public class NewController {
     @RequestMapping(value = "/{translit}",
             method = RequestMethod.GET,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(JsonViewer.ExtendedPublic.class)
+    @JsonView(JsonViewer.DetailPost.class)
     public Posts getPostByTranslit(
             @PathVariable("translit") String translit,
             @RequestParam(value = "author", required = false) boolean author
@@ -41,6 +41,7 @@ public class NewController {
         HashMap<String, Object> result = new LinkedHashMap<>();
         result.put("similar-posts", newsService.findSimilarPosts(category));
         result.put("top-reader-posts", newsService.findTopReaderPosts());
+        result.put("random-image-posts", newsService.findRandomImagePosts());
         return result;
     }
 }

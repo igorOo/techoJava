@@ -85,6 +85,10 @@ public class Posts implements Serializable {
     @JsonView(JsonViewer.ExtendedPublic.class)
     transient private List<PostsTags> tags;
 
+    @Transient
+    @JsonView(JsonViewer.DetailPost.class)
+    private String readTime;
+
 
     public TopPost toTopPost(){
         TopPost topPost = new TopPost(

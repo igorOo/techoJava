@@ -7,6 +7,8 @@ import ru.technoteinfo.site.repositories.PostsRepo;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.lang.reflect.Field;
@@ -98,9 +100,34 @@ public class PostsRepoImpl implements PostsRepo {
         List<TopPost> result = new LinkedList<>();
         for (Object[] item: list){
             StatisticPostRead postRead = (StatisticPostRead) item[1];
-            result.add(postRead.getPost().toTopPost());
+            result.add(postRead.getPost().toTopPost(author, preview));
         }
         return result;
+    }
+
+    public List<TopPost> findRandomImagePosts(Long typePost, int count){
+        if (count == 0){
+            count = 6;
+        }
+        List<Posts> list = entityManager.createQuery("select p1 from Posts p1 "+
+                "where p1.type.id = :postType order by random()")
+                .setParameter("postType", typePost)
+                .setMaxResults(count)
+                .getResultList();
+        List<TopPost> result = new LinkedList<>();
+        for (Posts item : list){
+            result.add(item.toTopPost());
+        }
+        return result;
+    }
+
+    public Double getTimeReadPost(Long postId){
+        Integer post = (Integer) entityManager.createNativeQuery("select cast(avg(statistic_post_read.time_read) as int) as time_read " +
+                "from statistic_post_read"+
+                " where statistic_post_read.post_id = :postId")
+                .setParameter("postId", postId)
+                .getSingleResult();
+        return post.doubleValue();
     }
 
     private List<TopPost> getMainPostsTranslit(String translit, boolean author, boolean preview, int limit, int start) {
@@ -253,14 +280,5 @@ public class PostsRepoImpl implements PostsRepo {
         return result;
     }
 
-
-//    public static Map<String, Object> parameters(Object obj) {
-//        Map<String, Object> map = new HashMap<>();
-//        for (Field field : obj.getClass().getDeclaredFields()) {
-//            field.setAccessible(true);
-//            try { map.put(field.getName(), field.get(obj)); } catch (Exception e) { }
-//        }
-//        return map;
-//    }
 
 }
