@@ -127,7 +127,7 @@ public class PostsRepoImpl implements PostsRepo {
                 " where statistic_post_read.post_id = :postId")
                 .setParameter("postId", postId)
                 .getSingleResult();
-        return post.doubleValue();
+        return post != null ? post.doubleValue(): 0.0;
     }
 
     private List<TopPost> getMainPostsTranslit(String translit, boolean author, boolean preview, int limit, int start) {

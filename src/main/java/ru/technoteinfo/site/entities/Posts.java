@@ -1,8 +1,6 @@
 package ru.technoteinfo.site.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
@@ -87,6 +85,7 @@ public class Posts implements Serializable {
 
     @Transient
     @JsonView(JsonViewer.DetailPost.class)
+    @JsonProperty("time_read")
     private String readTime;
 
 

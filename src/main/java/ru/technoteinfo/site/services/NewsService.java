@@ -23,6 +23,7 @@ public class NewsService {
     public Posts findNewByTranslit(String translit, boolean author, boolean meta){
         Posts post = postsRepo.findPostByTranslit(translit, author, meta);
         Double postTimeRead = postsRepo.getTimeReadPost(post.getId());
+
         String attribute = " сек.";
         if (String.valueOf(postTimeRead).length() > 2 && postTimeRead > 60){
             postTimeRead = Math.ceil(postTimeRead/60);
@@ -32,6 +33,7 @@ public class NewsService {
                 attribute = " ч.";
             }
         }
+
         post.setReadTime(String.valueOf(postTimeRead) + attribute);
         common.formatMetaPost(post);
         return post;
