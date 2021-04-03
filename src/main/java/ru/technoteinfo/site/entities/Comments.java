@@ -16,7 +16,7 @@ public class Comments {
     private Long id;
 
     @Column(name = "entity")
-    private Long postId;
+    private String postId;
 
     private String from;
 

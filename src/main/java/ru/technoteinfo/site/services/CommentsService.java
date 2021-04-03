@@ -15,7 +15,7 @@ public class CommentsService {
     @Autowired
     private CommentsRepo commentsRepo;
 
-    public List<Comments> getListComments(Long postId, Pageable pageable){
-        return commentsRepo.findCommentsByPostId(postId, pageable);
+    public List<Comments> getListComments(String postId, Pageable pageable){
+        return commentsRepo.findCommentsByPostIdIgnoreCase(postId, pageable);
     }
 }

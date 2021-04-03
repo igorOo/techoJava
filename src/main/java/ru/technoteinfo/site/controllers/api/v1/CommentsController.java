@@ -18,14 +18,13 @@ public class CommentsController {
 
     @GetMapping("/{post_id}/{page}")
     public List<Comments> getCommentsByPost(
-            @RequestParam("post_id") Long postId,
-            @RequestParam(value = "page", required = false) Integer page
+            @PathVariable("post_id") String postId,
+            @PathVariable(value = "page", required = false) Integer page
     ){
         if (page == 0){
             page = 1;
         }
-        List<Comments> list = commentsService.getListComments(postId, PageRequest.of(page, 20));
-        return list;
+        return commentsService.getListComments(postId, PageRequest.of(page, 20));
     }
 }
 
