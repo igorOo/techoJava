@@ -1,6 +1,7 @@
 package ru.technoteinfo.site.services;
 
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service
 @NoArgsConstructor
+@Slf4j
 public class NewsService {
     @Autowired
     private PostsRepoImpl postsRepo;

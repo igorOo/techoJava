@@ -29,8 +29,7 @@ public class NewController {
             @PathVariable("translit") String translit,
             @RequestParam(value = "author", required = false) boolean author
     ){
-        Posts news = newsService.findNewByTranslit(translit, author, false);
-        return news;
+        return newsService.findNewByTranslit(translit, author, false);
     }
 
     @RequestMapping(value = "/get-other-posts/{category}/{post_id}")

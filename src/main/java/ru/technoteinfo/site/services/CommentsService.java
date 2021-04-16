@@ -3,9 +3,9 @@ package ru.technoteinfo.site.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Comments;
-import ru.technoteinfo.site.repositories.CommentsRepo;
+import ru.technoteinfo.site.repositories.CommentsRepository;
 
 import java.util.List;
 
@@ -13,9 +13,13 @@ import java.util.List;
 public class CommentsService {
 
     @Autowired
-    private CommentsRepo commentsRepo;
+    private CommentsRepository commentsRepository;
 
     public List<Comments> getListComments(String postId, Pageable pageable){
-        return commentsRepo.findByPostIdIgnoreCase(postId, pageable);
+        return commentsRepository.findByPostIdIgnoreCase(postId, pageable);
+    }
+
+    public Integer getCountCommentsByPostId(String postId){
+        return commentsRepository.countByPostId(postId);
     }
 }

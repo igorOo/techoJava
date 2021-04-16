@@ -1,9 +1,11 @@
 package ru.technoteinfo.site.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
 
@@ -16,15 +18,18 @@ public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @JsonView(JsonViewer.Public.class)
     private Long id;
 
     @Column(name = "entity")
     private String postId;
 
-    @JsonValue
+    @JsonProperty("author")
+    @JsonView(JsonViewer.Public.class)
     private String from;
 
-    @JsonValue
+    @JsonProperty("text")
+    @JsonView(JsonViewer.Public.class)
     private String text;
 
     private boolean deleted;
@@ -41,10 +46,12 @@ public class Comments {
     private String ipAddress;
 
     @Column(name = "created_at")
-    @JsonValue
+    @JsonProperty("created_at")
+    @JsonView(JsonViewer.Public.class)
     private String createdAt;
 
     @Column(name = "updated_at")
-    @JsonValue
+    @JsonProperty("updated_at")
+    @JsonView(JsonViewer.Public.class)
     private String updatedAt;
 }
