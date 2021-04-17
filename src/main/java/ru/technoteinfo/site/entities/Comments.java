@@ -28,6 +28,11 @@ public class Comments {
     @JsonView(JsonViewer.Public.class)
     private String from;
 
+    @JsonProperty("avatar")
+    @JsonView(JsonViewer.Public.class)
+    @Transient
+    private String avatar;
+
     @JsonProperty("text")
     @JsonView(JsonViewer.Public.class)
     private String text;

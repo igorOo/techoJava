@@ -16,7 +16,11 @@ public class CommentsService {
     private CommentsRepository commentsRepository;
 
     public List<Comments> getListComments(String postId, Pageable pageable){
-        return commentsRepository.findByPostIdIgnoreCase(postId, pageable);
+        List<Comments> comments = commentsRepository.findByPostIdIgnoreCase(postId, pageable);
+        for (Comments comment: comments){
+            comment.setAvatar(comment.getCreatedBy().getAvatar());
+        }
+        return comments;
     }
 
     public Integer getCountCommentsByPostId(String postId){
