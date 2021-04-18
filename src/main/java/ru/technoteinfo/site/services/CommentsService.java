@@ -12,6 +12,8 @@ import ru.technoteinfo.site.repositories.CommentsRepository;
 import ru.technoteinfo.site.repositories.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,6 +43,7 @@ public class CommentsService {
         comment.setPostId(commentRequest.getPostId());
         comment.setFrom(auth.getName());
         comment.setText(commentRequest.getText());
+        comment.setDeleted(0);
         comment.setIpAddress(request.getRemoteAddr());
         comment.setCreatedBy(userRepository.findByName(auth.getName()));
         comment.setUpdatedBy(userRepository.findByName(auth.getName()));

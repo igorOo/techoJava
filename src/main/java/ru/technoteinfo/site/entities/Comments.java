@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.repository.Temporal;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
@@ -26,6 +31,7 @@ public class Comments {
 
     @JsonProperty("author")
     @JsonView(JsonViewer.Public.class)
+    @Column(name = "`from`")
     private String from;
 
     @JsonProperty("avatar")
@@ -37,7 +43,7 @@ public class Comments {
     @JsonView(JsonViewer.Public.class)
     private String text;
 
-    private boolean deleted;
+    private Integer deleted;
 
     @OneToOne
     @JoinColumn(name = "created_by", updatable = false, insertable = false)
@@ -53,10 +59,14 @@ public class Comments {
     @Column(name = "created_at")
     @JsonProperty("created_at")
     @JsonView(JsonViewer.Public.class)
+    @Type(type = "timestamp")
+    @CreatedDate
     private String createdAt;
 
     @Column(name = "updated_at")
     @JsonProperty("updated_at")
     @JsonView(JsonViewer.Public.class)
+    @Type(type = "timestamp")
+    @LastModifiedDate
     private String updatedAt;
 }
