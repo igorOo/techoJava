@@ -6,13 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.technoteinfo.site.entities.Comments;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
+import ru.technoteinfo.site.pojo.CommentRequest;
 import ru.technoteinfo.site.services.CommentsService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/comments")
@@ -37,6 +36,10 @@ public class CommentsController {
         return ResponseEntity.ok(result);
     }
 
-
+    @PostMapping("/{post_id}/addcomment")
+    public ResponseEntity<?> addComment(@RequestBody CommentRequest comment, HttpServletRequest request){
+        commentsService.saveComment(comment, request);
+        return ResponseEntity.ok("true");
+    }
 }
 
