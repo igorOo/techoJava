@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
@@ -38,8 +39,14 @@ public class CommentsController {
 
     @PostMapping("/{post_id}/addcomment")
     public ResponseEntity<?> addComment(@RequestBody CommentRequest comment, HttpServletRequest request){
-        commentsService.saveComment(comment, request);
-        return ResponseEntity.ok("true");
+        Number result = commentsService.saveComment(comment, request);
+        if (result.intValue() > 0){
+            HashMap<String, Number> id = new HashMap<>();
+            id.put("id", result.intValue());
+            return new ResponseEntity(id, HttpStatus.CREATED);
+        }else{
+           return new ResponseEntity("Не удалось добавить комментарий", HttpStatus.NOT_MODIFIED);
+        }
     }
 }
 

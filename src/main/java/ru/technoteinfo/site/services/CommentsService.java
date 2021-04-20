@@ -5,15 +5,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Comments;
 import ru.technoteinfo.site.pojo.CommentRequest;
 import ru.technoteinfo.site.repositories.CommentsRepository;
 import ru.technoteinfo.site.repositories.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,7 +35,7 @@ public class CommentsService {
         return commentsRepository.countByPostId(postId);
     }
 
-    public void saveComment(CommentRequest commentRequest, HttpServletRequest request){
+    public Number saveComment(CommentRequest commentRequest, HttpServletRequest request){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Comments comment = new Comments();
         comment.setPostId(commentRequest.getPostId());
@@ -47,6 +45,13 @@ public class CommentsService {
         comment.setIpAddress(request.getRemoteAddr());
         comment.setCreatedBy(userRepository.findByName(auth.getName()));
         comment.setUpdatedBy(userRepository.findByName(auth.getName()));
-        commentsRepository.save(comment);
+        comment.setCreatedAt(new Date());
+        comment.setUpdatedAt(new Date());
+        Comments res = commentsRepository.save(comment);
+        if (res.getId() != null){
+            return res.getId();
+        }else {
+            return  -1;
+        }
     }
 }

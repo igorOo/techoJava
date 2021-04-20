@@ -1,18 +1,16 @@
 package ru.technoteinfo.site.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.Temporal;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.UpdateTimestamp;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -60,13 +58,11 @@ public class Comments {
     @JsonProperty("created_at")
     @JsonView(JsonViewer.Public.class)
     @Type(type = "timestamp")
-    @CreatedDate
-    private String createdAt;
+    private Date createdAt;
 
     @Column(name = "updated_at")
     @JsonProperty("updated_at")
     @JsonView(JsonViewer.Public.class)
     @Type(type = "timestamp")
-    @LastModifiedDate
-    private String updatedAt;
+    private Date updatedAt;
 }
