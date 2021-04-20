@@ -22,7 +22,7 @@ import ru.technoteinfo.site.services.TechnoUserDetailService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     @Autowired
     private TechnoUserDetailService technoUserDetailService;

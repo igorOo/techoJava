@@ -6,11 +6,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 import ru.technoteinfo.site.pojo.CommentRequest;
 import ru.technoteinfo.site.services.CommentsService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
@@ -38,6 +40,7 @@ public class CommentsController {
     }
 
     @PostMapping("/{post_id}/addcomment")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<?> addComment(@RequestBody CommentRequest comment, HttpServletRequest request){
         Number result = commentsService.saveComment(comment, request);
         if (result.intValue() > 0){
