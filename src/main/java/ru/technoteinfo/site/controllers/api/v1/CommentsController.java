@@ -40,7 +40,7 @@ public class CommentsController {
     }
 
     @PostMapping("/{post_id}/addcomment")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> addComment(@RequestBody CommentRequest comment, HttpServletRequest request){
         Number result = commentsService.saveComment(comment, request);
         if (result.intValue() > 0){
