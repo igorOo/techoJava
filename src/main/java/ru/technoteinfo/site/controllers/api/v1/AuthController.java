@@ -1,6 +1,8 @@
 package ru.technoteinfo.site.controllers.api.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +21,11 @@ import ru.technoteinfo.site.pojo.LoginRequest;
 import ru.technoteinfo.site.repositories.RoleRepository;
 import ru.technoteinfo.site.repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,6 +47,10 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Value("${jwt.expirationMs}")
+    private long jwtExpirationMs;
+
+
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> auth(@RequestBody LoginRequest loginRequest){
         Authentication authentication = authenticationManager
@@ -57,13 +64,19 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String tokenDateExpire = formatter.format(new Date((new Date()).getTime() + jwtExpirationMs));
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles,
+                tokenDateExpire
+                ));
     }
 
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(
             @RequestParam("email") String email,
             @RequestParam("password") String password,
