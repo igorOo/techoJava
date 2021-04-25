@@ -3,6 +3,7 @@ package ru.technoteinfo.site.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -22,7 +23,10 @@ import ru.technoteinfo.site.services.TechnoUserDetailService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
+@EnableAspectJAutoProxy
+@EnableGlobalMethodSecurity(prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     @Autowired
     private TechnoUserDetailService technoUserDetailService;
@@ -42,7 +46,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter implements Web
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (1)
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(technoUserDetailService).passwordEncoder(getPasswordEncoder());
     }
 
@@ -58,6 +62,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter implements Web
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/profile/**").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/api/v1/comments/**/addcomment").authenticated()
                 .antMatchers("/**").permitAll();
 //                .antMatchers("/secured/**").hasAnyRole("ADMIN")
 //                .and()
@@ -67,6 +72,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter implements Web
 //                .permitAll();
         http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
             registry.addMapping("/api/**")

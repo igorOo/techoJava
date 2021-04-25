@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
@@ -40,10 +41,17 @@ public class CommentsController {
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(name = "/{post_id}/addcomment", method=RequestMethod.POST)
+    @PostMapping(value = "/{post_id}/addcomment")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> addComment(@RequestParam CommentRequest comment, HttpServletRequest request){
-        Number result = commentsService.saveComment(comment, request);
+    public ResponseEntity<?> addComment(
+            @RequestParam(value = "post_id") String postId,
+            @RequestParam(value = "comment") String comment,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "reply", required = false) String reply,
+            HttpServletRequest request
+    ){
+        CommentRequest commentRequest = new CommentRequest(postId, comment, email, reply);
+        Number result = commentsService.saveComment(commentRequest, request);
         if (result.intValue() > 0){
             HashMap<String, Number> id = new HashMap<>();
             id.put("id", result.intValue());
