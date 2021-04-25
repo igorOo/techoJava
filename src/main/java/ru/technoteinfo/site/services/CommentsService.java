@@ -5,8 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Comments;
-import ru.technoteinfo.site.entities.User;
 import ru.technoteinfo.site.pojo.CommentRequest;
 import ru.technoteinfo.site.repositories.CommentsRepository;
 import ru.technoteinfo.site.repositories.UserRepository;
@@ -24,11 +24,17 @@ public class CommentsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CommonController common;
+
     public List<Comments> getListComments(String postId, Pageable pageable){
         List<Comments> comments = commentsRepository.findByPostIdIgnoreCaseOrderByCreatedAtAsc(postId, pageable);
         for (Comments comment: comments){
             if (comment.getCreatedBy() != null){
-                comment.setAvatar(comment.getCreatedBy().getAvatar());
+                String avatar = comment.getCreatedBy().getAvatar();
+                if (avatar != null){
+                    comment.setAvatar(common.getAvatarUrl(comment.getCreatedBy().getAvatar()));
+                }
             }
             if (comment.getCreatedBy() != null){
                 comment.setUser_id(comment.getCreatedBy().getId());

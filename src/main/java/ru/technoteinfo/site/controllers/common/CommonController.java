@@ -95,4 +95,8 @@ public class CommonController {
             }
         return post;
     }
+
+    public String getAvatarUrl(String avatar){
+        return securityImage+"://"+domainImage+"/images/profiles/"+avatar;
+    }
 }
