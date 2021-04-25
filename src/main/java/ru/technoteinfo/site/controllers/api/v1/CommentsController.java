@@ -44,7 +44,7 @@ public class CommentsController {
     @PostMapping(value = "/{post_id}/addcomment")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> addComment(
-            @RequestParam(value = "post_id") String postId,
+            @PathVariable(value = "post_id") String postId,
             @RequestParam(value = "comment") String comment,
             @RequestParam(value = "email") String email,
             @RequestParam(value = "reply", required = false) String reply,

@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.lang.Nullable;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,11 +46,11 @@ public class Comments {
     private Integer deleted;
 
     @OneToOne
-    @JoinColumn(name = "created_by", updatable = false, insertable = false)
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
     private User createdBy;
 
     @OneToOne
-    @JoinColumn(name = "updated_by", updatable = false, insertable = false)
+    @JoinColumn(name = "updated_by", referencedColumnName = "id")
     private User updatedBy;
 
     @Column(name = "ip_address")
@@ -65,4 +67,15 @@ public class Comments {
     @JsonView(JsonViewer.Public.class)
     @Type(type = "timestamp")
     private Date updatedAt;
+
+    @JoinColumn(name = "reply_to")
+    @OneToOne
+    @JsonView(JsonViewer.Public.class)
+    @JsonProperty("reply")
+    private Comments replyComment;
+
+    @Transient
+    @JsonView(JsonViewer.Public.class)
+    @JsonProperty("author_id")
+    private Long user_id;
 }

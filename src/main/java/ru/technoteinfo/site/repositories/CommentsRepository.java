@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CommentsRepository extends JpaRepository<Comments, Long> {
-    List<Comments> findByPostIdIgnoreCase(String postId, Pageable pageable);
+    List<Comments> findByPostIdIgnoreCaseOrderByCreatedAtAsc(String postId, Pageable pageable);
     Integer countByPostId(String postId);
 }
