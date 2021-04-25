@@ -26,7 +26,10 @@ public class CommentsService {
     public List<Comments> getListComments(String postId, Pageable pageable){
         List<Comments> comments = commentsRepository.findByPostIdIgnoreCase(postId, pageable);
         for (Comments comment: comments){
-            comment.setAvatar(comment.getCreatedBy().getAvatar());
+            String avatar = comment.getCreatedBy().getAvatar();
+            if (avatar != null){
+                comment.setAvatar(avatar);
+            }
         }
         return comments;
     }
