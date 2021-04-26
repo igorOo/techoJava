@@ -47,7 +47,7 @@ public class CommentsService {
         return commentsRepository.countByPostId(postId);
     }
 
-    public Number saveComment(CommentRequest commentRequest, HttpServletRequest request){
+    public Comments saveComment(CommentRequest commentRequest, HttpServletRequest request){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Comments comment = new Comments();
         comment.setPostId(commentRequest.getPostId());
@@ -61,9 +61,15 @@ public class CommentsService {
         comment.setUpdatedAt(new Date());
         Comments res = commentsRepository.save(comment);
         if (res.getId() != null){
-            return res.getId();
+            if (res.getCreatedBy() != null){
+                String avatar = res.getCreatedBy().getAvatar();
+                if (avatar != null){
+                    res.setAvatar(common.getAvatarUrl(res.getCreatedBy().getAvatar()));
+                }
+            }
+            return res;
         }else {
-            return  -1;
+            return null;
         }
     }
 }

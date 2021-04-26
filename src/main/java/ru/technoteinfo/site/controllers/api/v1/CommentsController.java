@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ru.technoteinfo.site.entities.Comments;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 import ru.technoteinfo.site.pojo.CommentRequest;
 import ru.technoteinfo.site.services.CommentsService;
@@ -51,10 +52,10 @@ public class CommentsController {
             HttpServletRequest request
     ){
         CommentRequest commentRequest = new CommentRequest(postId, comment, email, reply);
-        Number result = commentsService.saveComment(commentRequest, request);
-        if (result.intValue() > 0){
-            HashMap<String, Number> id = new HashMap<>();
-            id.put("id", result.intValue());
+        Comments result = commentsService.saveComment(commentRequest, request);
+        if (result != null){
+            HashMap<String, Comments> id = new HashMap<>();
+            id.put("result", result);
             return new ResponseEntity(id, HttpStatus.CREATED);
         }else{
            return new ResponseEntity("Не удалось добавить комментарий", HttpStatus.NOT_MODIFIED);
