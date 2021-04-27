@@ -3,6 +3,7 @@ package ru.technoteinfo.site.controllers.api.v1;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +18,9 @@ import ru.technoteinfo.site.services.CommentsService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -33,12 +36,23 @@ public class CommentsController {
             @PathVariable("post_id") String postId,
             @PathVariable(value = "page", required = false) Integer page
     ){
+        final int countPerPage = 5;
         if (page > 0){
             page -= 1;
         }
+        Pageable pageable = PageRequest.of(page, countPerPage, Sort.by("createdAt").descending());
+
+        int count = commentsService.getCountCommentsByPostId(postId);
+        int currentPage = pageable.getPageNumber()+1;
+        int lastPage = (int) Math.ceil((double)count/countPerPage);
+        HashMap<String, Integer> pages = new HashMap<>();
+        pages.put("currentPage", currentPage);
+        pages.put("lastPage", lastPage);
+
         HashMap<String, Object> result = new HashMap<>();
-        result.put("comments", commentsService.getListComments(postId, PageRequest.of(page, 20, Sort.by("createdAt").descending())));
-        result.put("count_comments", commentsService.getCountCommentsByPostId(postId));
+        result.put("comments", commentsService.getListComments(postId, pageable));
+        result.put("count_comments", count);
+        result.put("pages", pages);
         return ResponseEntity.ok(result);
     }
 
