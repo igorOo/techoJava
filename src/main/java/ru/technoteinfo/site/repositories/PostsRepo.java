@@ -19,4 +19,5 @@ public interface PostsRepo {
     List<TopPost> findSimilarPosts(String translit, boolean author, boolean preview, int count, Long type_post);
 
     Posts findPostByTranslit(String translit, boolean author, boolean meta);
+    Posts findPostByTranslitAndType(String translit, Long postType, boolean author, boolean meta);
 }

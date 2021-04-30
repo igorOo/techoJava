@@ -23,13 +23,13 @@ public class NewController {
 
     @RequestMapping(value = "/{translit}",
             method = RequestMethod.GET,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @JsonView(JsonViewer.DetailPost.class)
     public Posts getPostByTranslit(
             @PathVariable("translit") String translit,
             @RequestParam(value = "author", required = false) boolean author
     ){
-        return newsService.findNewByTranslit(translit, author, false);
+        return newsService.findPostByTranslitAndType(translit, 1L, author, false);
     }
 
     @RequestMapping(value = "/get-other-posts/{category}/{post_id}")

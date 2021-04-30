@@ -45,9 +45,11 @@ public class PostsRepoImpl implements PostsRepo {
     }
 
     @Override
-    public Posts findPostByTranslit(String translit, boolean author, boolean meta){
-        Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.translit = :translit")
-                .setParameter("translit", translit).getSingleResult();
+    public Posts findPostByTranslitAndType(String translit, Long postType, boolean author, boolean meta){
+        Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.translit = :translit and p1.type.postType = :postType")
+                .setParameter("translit", translit)
+                .setParameter("postType", postType)
+                .getSingleResult();
         if (author == false){
             post.setAuthor(null);
         }
@@ -86,6 +88,22 @@ public class PostsRepoImpl implements PostsRepo {
             result.add(item.toTopPost(author, preview));
         }
         return result;
+    }
+
+    @Override
+    public Posts findPostByTranslit(String translit, boolean author, boolean meta) {
+        Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.translit = :translit")
+                .setParameter("translit", translit)
+                .getSingleResult();
+        if (author == false){
+            post.setAuthor(null);
+        }
+        List<PostsTags> tags = entityManager.createQuery("select tg from PostsTags tg where tg.post.id = :post_id")
+                .setParameter("post_id", post.getId()).getResultList();
+        if (tags != null){
+            post.setTags(tags);
+        }
+        return post;
     }
 
     public List<TopPost> findTopReaderPosts(boolean author, boolean preview, int count, Long typePost){
