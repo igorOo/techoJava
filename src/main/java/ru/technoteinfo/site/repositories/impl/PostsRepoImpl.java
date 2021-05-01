@@ -7,6 +7,7 @@ import ru.technoteinfo.site.repositories.PostsRepo;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -146,6 +147,15 @@ public class PostsRepoImpl implements PostsRepo {
                 .setParameter("postId", postId)
                 .getSingleResult();
         return post != null ? post.doubleValue(): 0.0;
+    }
+
+    public BigInteger getCountReadPost(Long postId){
+        BigInteger post = (BigInteger) entityManager.createNativeQuery("select count(*) as count " +
+                "from statistic_post_read"+
+                " where statistic_post_read.post_id = :postId")
+                .setParameter("postId", postId)
+                .getSingleResult();
+        return post != null ? post: BigInteger.valueOf(0);
     }
 
     private List<TopPost> getMainPostsTranslit(String translit, boolean author, boolean preview, int limit, int start) {

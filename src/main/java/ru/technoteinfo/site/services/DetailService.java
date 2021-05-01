@@ -9,6 +9,7 @@ import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class DetailService {
     public Posts findPostByTranslitAndType(String translit, Long postType, boolean author, boolean meta){
         Posts post = postsRepo.findPostByTranslitAndType(translit, postType, author, meta);
         Double postTimeRead = postsRepo.getTimeReadPost(post.getId());
+        BigInteger postcountRead = postsRepo.getCountReadPost(post.getId());
 
         String attribute = " сек.";
         if (String.valueOf(postTimeRead).length() > 2 && postTimeRead > 60){
@@ -37,6 +39,7 @@ public class DetailService {
         }
 
         post.setReadTime(String.valueOf(postTimeRead) + attribute);
+        post.setCountRead(postcountRead);
         common.formatMetaPost(post);
         return post;
     }

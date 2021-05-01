@@ -8,6 +8,7 @@ import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -87,6 +88,11 @@ public class Posts implements Serializable {
     @JsonView(JsonViewer.DetailPost.class)
     @JsonProperty("time_read")
     private String readTime;
+
+    @Transient
+    @JsonView(JsonViewer.DetailPost.class)
+    @JsonProperty("count_read")
+    transient private BigInteger countRead;
 
 
     public TopPost toTopPost(){
