@@ -158,6 +158,23 @@ public class PostsRepoImpl implements PostsRepo {
         return post != null ? post: BigInteger.valueOf(0);
     }
 
+
+    public List<Posts> getNextAndPrevPosts(Long post_id, Integer type){
+        List<Posts> posts = (List<Posts>) entityManager.createNativeQuery("(select * from posts where \"type\"=:typePost " +
+                "and \"id\" < :postId " +
+                "order by \"id\" desc " +
+                "limit 1) " +
+                "union " +
+                "(select * from posts where \"type\"=:typePost " +
+                "and \"id\" > :postId " +
+                "order by \"id\" desc " +
+                "limit 1)")
+                .setParameter("postId", post_id)
+                .setParameter("typePost", type)
+                .getResultList();
+        return posts;
+    }
+
     private List<TopPost> getMainPostsTranslit(String translit, boolean author, boolean preview, int limit, int start) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Posts> query = cb.createQuery(Posts.class);

@@ -50,5 +50,8 @@ public class DetailService {
         return list;
     }
 
+    public List<Posts> getPrevAndNextPosts(Long post_id, Integer typePost){
+        return postsRepo.getNextAndPrevPosts(post_id, typePost);
+    }
 
 }
