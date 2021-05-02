@@ -13,6 +13,7 @@ import ru.technoteinfo.site.services.NoteService;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -40,7 +41,7 @@ public class NoteController {
     ){
         HashMap<String, Object> result = new LinkedHashMap<>();
         result.put("similar-posts", noteService.findSimilarPosts(category));
-        result.put("next-prev", noteService.getPrevAndNextPosts(postId, 2));
+        result.put("next-prev", noteService.getPrevAndNextPosts(postId, 2L));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 }

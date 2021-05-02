@@ -1,8 +1,11 @@
 package ru.technoteinfo.site.repositories.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.*;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
+import ru.technoteinfo.site.pojo.NextPrevResponse;
 import ru.technoteinfo.site.repositories.PostsRepo;
 
 import javax.persistence.*;
@@ -18,6 +21,9 @@ import java.lang.reflect.Field;
 public class PostsRepoImpl implements PostsRepo {
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private CommonController common;
 
 
     @Override
@@ -159,20 +165,25 @@ public class PostsRepoImpl implements PostsRepo {
     }
 
 
-    public List<Posts> getNextAndPrevPosts(Long post_id, Integer type){
-        List<Posts> posts = (List<Posts>) entityManager.createNativeQuery("(select * from posts where \"type\"=:typePost " +
-                "and \"id\" < :postId " +
-                "order by \"id\" desc " +
-                "limit 1) " +
-                "union " +
-                "(select * from posts where \"type\"=:typePost " +
-                "and \"id\" > :postId " +
-                "order by \"id\" desc " +
-                "limit 1)")
+    public List<NextPrevResponse> getNextAndPrevPosts(Long post_id, Long type){
+        List<NextPrevResponse> result = new LinkedList<>();
+        Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.type.postType = :typePost " +
+                "and p1.id < :postId " +
+                "order by p1.id desc ")
                 .setParameter("postId", post_id)
                 .setParameter("typePost", type)
-                .getResultList();
-        return posts;
+                .setMaxResults(1)
+                .getSingleResult();
+        result.add(new NextPrevResponse(post.getName(), common.getNoteUrl(post.getTranslit())));
+        post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.type.postType = :typePost " +
+                "and p1.id > :postId " +
+                "order by p1.id desc ")
+                .setParameter("postId", post_id)
+                .setParameter("typePost", type)
+                .setMaxResults(1)
+                .getSingleResult();
+        result.add(new NextPrevResponse(post.getName(), common.getNoteUrl(post.getTranslit())));
+        return result;
     }
 
     private List<TopPost> getMainPostsTranslit(String translit, boolean author, boolean preview, int limit, int start) {

@@ -50,7 +50,7 @@ public class Posts implements Serializable {
     @JsonView(JsonViewer.Public.class)
     private String main_image;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author")
     @JsonView(JsonViewer.Public.class)
     private User author;

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @Table(name = "`user`", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue

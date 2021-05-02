@@ -99,4 +99,8 @@ public class CommonController {
     public String getAvatarUrl(String avatar){
         return securityImage+"://"+domainImage+"/images/profiles/"+avatar;
     }
+
+    public String getNoteUrl(String slug) { return urlSecurity+"://"+urlDomain+"/note/"+slug;}
+
+    public String getNewUrl(String slug) { return urlSecurity+"://"+urlDomain+"/new/"+slug;}
 }

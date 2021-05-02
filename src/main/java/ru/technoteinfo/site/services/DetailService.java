@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
+import ru.technoteinfo.site.pojo.NextPrevResponse;
 import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
 
 import java.math.BigInteger;
@@ -50,7 +51,7 @@ public class DetailService {
         return list;
     }
 
-    public List<Posts> getPrevAndNextPosts(Long post_id, Integer typePost){
+    public List<NextPrevResponse> getPrevAndNextPosts(Long post_id, Long typePost){
         return postsRepo.getNextAndPrevPosts(post_id, typePost);
     }
 
