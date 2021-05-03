@@ -15,6 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @NoArgsConstructor
@@ -93,6 +95,17 @@ public class CommonController {
             }catch (ParseException e){
                 System.out.println(e);
             }
+        final String regex = "src ?= ?\\\"(\\/images\\/[\\w\\/\\.\\-\\_]+)";
+        final String string = post.getText();
+        final String subst = "src=\""+securityImage+"://"+domainImage+"$1";
+
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(string);
+
+        // The substituted value will be contained in the result variable
+        final String result = matcher.replaceAll(subst);
+
+        post.setText(result);
         return post;
     }
 
