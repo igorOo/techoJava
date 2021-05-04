@@ -73,7 +73,7 @@ public class CommonController {
             if (post.getCategory() != null){
                 StringBuilder url = new StringBuilder();
                 url.append(urlSecurity+"://"+urlDomain);
-                switch (post.getCategory().getType_post().getPostType().intValue()){
+                switch (post.getCategory().getTypePost().getPostType().intValue()){
                     case 1:
                         url.append("/news/category");
                         break;

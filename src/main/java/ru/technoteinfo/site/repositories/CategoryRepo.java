@@ -1,9 +1,11 @@
 package ru.technoteinfo.site.repositories;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.technoteinfo.site.entities.Category;
+import ru.technoteinfo.site.entities.PostsType;
 
 import java.util.List;
 
@@ -18,5 +20,5 @@ public interface CategoryRepo extends JpaRepository<Category, Long> {
             nativeQuery = true)
     List<Object> findTopViewCategories();
 
-    List<Category> findByTranslitAndType_postOrderBySort(String translit, String sort);
+    Category findFirstByTranslitAndTypePost_PostType(String translit, Long postsType, Sort sort);
 }

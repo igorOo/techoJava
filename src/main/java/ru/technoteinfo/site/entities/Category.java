@@ -49,11 +49,11 @@ public class Category {
 
     @Column(name = "date_create")
     @JsonIgnore
-    private Date date_create;
+    private Date dateCreate;
 
     @Column(name = "date_edit")
     @JsonIgnore
-    private Date date_edit;
+    private Date dateEdit;
 
     @Column(name = "sort")
     @JsonView(JsonViewer.Public.class)
@@ -62,7 +62,7 @@ public class Category {
     @OneToOne
     @JoinColumn(name = "type_post")
     @JsonView(JsonViewer.Internal.class)
-    private PostsType type_post;
+    private PostsType typePost;
 
     @JsonView(JsonViewer.Public.class)
     private transient String url;

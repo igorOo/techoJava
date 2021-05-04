@@ -97,6 +97,21 @@ public class PostsRepoImpl implements PostsRepo {
         return result;
     }
 
+    public List<TopPost> findPostsInCategoryAndType(String category, Long typePost, boolean author, boolean preview, int pageNumber, int pageSize){
+        List<Posts> list = entityManager.createQuery("select p1 from Posts p1 " +
+                "where p1.category.translit=:translit and p1.type.postType = :postType order by p1.date_create desc")
+                .setParameter("translit", category)
+                .setParameter("postType", typePost)
+                .setFirstResult((pageNumber-1) * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
+        List<TopPost> result = new LinkedList<>();
+        for (Posts item : list){
+            result.add(item.toTopPost(author, preview));
+        }
+        return result;
+    }
+
     @Override
     public Posts findPostByTranslit(String translit, boolean author, boolean meta) {
         Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.translit = :translit")
@@ -163,7 +178,6 @@ public class PostsRepoImpl implements PostsRepo {
                 .getSingleResult();
         return post != null ? post: BigInteger.valueOf(0);
     }
-
 
     public List<NextPrevResponse> getNextAndPrevPosts(Long post_id, Long type){
         List<NextPrevResponse> result = new LinkedList<>();
