@@ -1,14 +1,11 @@
 package ru.technoteinfo.site.repositories;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import ru.technoteinfo.site.entities.Category;
 
-import java.lang.annotation.Native;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface CategoryRepo extends JpaRepository<Category, Long> {
 
@@ -21,4 +18,5 @@ public interface CategoryRepo extends JpaRepository<Category, Long> {
             nativeQuery = true)
     List<Object> findTopViewCategories();
 
+    List<Category> findByTranslitAndType_postOrderBySort(String translit, String sort);
 }
