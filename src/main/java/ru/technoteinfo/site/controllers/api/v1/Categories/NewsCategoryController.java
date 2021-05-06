@@ -38,7 +38,7 @@ public class NewsCategoryController {
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
 
         int count = newsCategoryService.getCountCommentsByPostId(translit);
-        int currentPage = pageable.getPageNumber()+1;
+        int currentPage = pageable.getPageNumber();
         int lastPage = (int) Math.ceil((double)count/pageSize);
         HashMap<String, Integer> pages = new HashMap<>();
         pages.put("currentPage", currentPage);
@@ -46,6 +46,7 @@ public class NewsCategoryController {
 
         List<TopPost> list = newsCategoryService.getCategoryList(translit, page, pageSize);
         result.put("posts", list);
+        result.put("pages", pages);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

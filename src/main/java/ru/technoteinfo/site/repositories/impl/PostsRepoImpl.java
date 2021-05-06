@@ -83,7 +83,7 @@ public class PostsRepoImpl implements PostsRepo {
     public Integer getCountPostsInCategory(String category){
         try{
             final String queryString = "select count(p1) from Posts p1 where p1.category.translit = :translit";
-            Query query = entityManager.createNativeQuery(queryString);
+            Query query = entityManager.createQuery(queryString);
             query.setParameter("translit", category);
             Integer result = Integer.valueOf(String.valueOf(query.getSingleResult()));
             return result;
