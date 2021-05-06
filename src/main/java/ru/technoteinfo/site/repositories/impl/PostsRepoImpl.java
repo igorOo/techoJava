@@ -80,6 +80,18 @@ public class PostsRepoImpl implements PostsRepo {
         }
     }
 
+    public Integer getCountPostsInCategory(String category){
+        try{
+            final String queryString = "select count(p1) from Posts p1 where p1.category.translit = :translit";
+            Query query = entityManager.createNativeQuery(queryString);
+            query.setParameter("translit", category);
+            Integer result = Integer.valueOf(String.valueOf(query.getSingleResult()));
+            return result;
+        }catch (RuntimeException error){
+            return 0;
+        }
+    }
+
     public List<TopPost> findSimilarPosts(String translit, boolean author, boolean preview, int count, Long type_post){
         if (count == 0){
             count = 3;

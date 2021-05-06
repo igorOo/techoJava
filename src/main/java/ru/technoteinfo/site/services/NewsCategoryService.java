@@ -32,7 +32,12 @@ public class NewsCategoryService {
         Sort sort = Sort.by(Sort.Direction.DESC, "sort");
         Category category = categoryRepo.findFirstByTranslitAndTypePost_PostType(translit, 1L, sort);
         List<TopPost> list = postsRepo.findPostsInCategoryAndType(category.getTranslit(), category.getTypePost().getPostType(), false, true, page, pageSize);
+        common.formatMeta(list);
         return list;
+    }
+
+    public Integer getCountCommentsByPostId(String category){
+        return postsRepo.getCountPostsInCategory(category);
     }
 
 }
