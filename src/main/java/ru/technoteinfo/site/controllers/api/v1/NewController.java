@@ -32,10 +32,10 @@ public class NewController {
         return newsService.findPostByTranslitAndType(translit, 1L, author, false);
     }
 
-    @RequestMapping(value = "/get-other-posts/{category}/{post_id}")
+    @RequestMapping(value = "/get-other-posts/{category}")
     public HashMap<String, Object> getSimilarPosts(
-            @PathVariable("category") String category,
-            @PathVariable("post_id") Long postId
+            @PathVariable("category") String category//,
+            //@PathVariable("post_id") Long postId
     ){
         HashMap<String, Object> result = new LinkedHashMap<>();
         result.put("similar-posts", newsService.findSimilarPosts(category));

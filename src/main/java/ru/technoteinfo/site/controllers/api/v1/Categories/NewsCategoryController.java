@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.entities.Category;
 import ru.technoteinfo.site.entities.Posts;
+import ru.technoteinfo.site.entities.PostsType;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.services.NewsCategoryService;
 
@@ -18,12 +19,38 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value="/news/category")
+@RequestMapping(value="/news")
 public class NewsCategoryController {
     @Autowired
     private NewsCategoryService newsCategoryService;
 
-    @RequestMapping(value = "/{translit}",
+    @RequestMapping(value = "",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> listCategory(
+            @RequestParam(name = "page", required = false) Integer page
+    ){
+        HashMap<String, Object> result = new HashMap<>();
+        final int pageSize = 9;
+        if (page == null){
+            page = 1;
+        }
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
+
+        int count = newsCategoryService.getCountPostsByType(1L);
+        int currentPage = pageable.getPageNumber();
+        int lastPage = (int) Math.ceil((double)count/pageSize);
+        HashMap<String, Integer> pages = new HashMap<>();
+        pages.put("currentPage", currentPage);
+        pages.put("lastPage", lastPage);
+
+        List<TopPost> list = newsCategoryService.getPostsByType(1L,false, false, page, pageSize);
+        result.put("posts", list);
+        result.put("pages", pages);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/category/{translit}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> listCategory(
@@ -37,7 +64,7 @@ public class NewsCategoryController {
         }
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
 
-        int count = newsCategoryService.getCountCommentsByPostId(translit);
+        int count = newsCategoryService.getCountPostsInCategory(translit);
         int currentPage = pageable.getPageNumber();
         int lastPage = (int) Math.ceil((double)count/pageSize);
         HashMap<String, Integer> pages = new HashMap<>();

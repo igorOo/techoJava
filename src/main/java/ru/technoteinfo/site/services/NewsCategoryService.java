@@ -36,8 +36,19 @@ public class NewsCategoryService {
         return list;
     }
 
-    public Integer getCountCommentsByPostId(String category){
+    public Integer getCountPostsInCategory(String category){
         return postsRepo.getCountPostsInCategory(category);
+    }
+
+    public Integer getCountPostsByType(Long type){
+        return postsRepo.getCountPostsByType(type);
+    }
+
+    public List<TopPost> getPostsByType(Long type, boolean author, boolean preview, int page, int pageSize){
+        Sort sort = Sort.by(Sort.Direction.DESC, "sort");
+        List<TopPost> list = postsRepo.findPostsbyType(type, author, preview, pageSize, (page-1)*pageSize);
+        common.formatMeta(list);
+        return list;
     }
 
 }
