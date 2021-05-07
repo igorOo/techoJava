@@ -193,22 +193,35 @@ public class PostsRepoImpl implements PostsRepo {
 
     public List<NextPrevResponse> getNextAndPrevPosts(Long post_id, Long type){
         List<NextPrevResponse> result = new LinkedList<>();
-        Posts post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.type.postType = :typePost " +
-                "and p1.id < :postId " +
-                "order by p1.id desc ")
-                .setParameter("postId", post_id)
-                .setParameter("typePost", type)
-                .setMaxResults(1)
-                .getSingleResult();
-        result.add(new NextPrevResponse(post.getName(), common.getNoteUrl(post.getTranslit())));
-        post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.type.postType = :typePost " +
-                "and p1.id > :postId " +
-                "order by p1.id desc ")
-                .setParameter("postId", post_id)
-                .setParameter("typePost", type)
-                .setMaxResults(1)
-                .getSingleResult();
-        result.add(new NextPrevResponse(post.getName(), common.getNoteUrl(post.getTranslit())));
+        Posts post = null;
+        try{
+            post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.type.postType = :typePost " +
+                    "and p1.id < :postId " +
+                    "order by p1.id desc ")
+                    .setParameter("postId", post_id)
+                    .setParameter("typePost", type)
+                    .setMaxResults(1)
+                    .getSingleResult();
+        }catch (NoResultException e){
+            post = null;
+        }
+        if (post != null){
+            result.add(new NextPrevResponse(post.getName(), common.getNoteUrl(post.getTranslit())));
+        }
+        try {
+            post = (Posts) entityManager.createQuery("select p1 from Posts p1 where p1.type.postType = :typePost " +
+                    "and p1.id > :postId " +
+                    "order by p1.id desc ")
+                    .setParameter("postId", post_id)
+                    .setParameter("typePost", type)
+                    .setMaxResults(1)
+                    .getSingleResult();
+        }catch (NoResultException e){
+            post = null;
+        }
+        if (post != null){
+            result.add(new NextPrevResponse(post.getName(), common.getNoteUrl(post.getTranslit())));
+        }
         return result;
     }
 

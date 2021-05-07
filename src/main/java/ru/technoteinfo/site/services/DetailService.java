@@ -45,8 +45,8 @@ public class DetailService {
         return post;
     }
 
-    public List<TopPost> findSimilarPosts(String category){
-        List<TopPost> list = postsRepo.findSimilarPosts(category, false, false, 3, 1L);
+    public List<TopPost> findSimilarPosts(String category, Long typePost){
+        List<TopPost> list = postsRepo.findSimilarPosts(category, false, false, 3, typePost);
         common.formatMeta(list);
         return list;
     }

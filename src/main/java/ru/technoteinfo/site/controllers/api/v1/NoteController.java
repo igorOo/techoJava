@@ -40,7 +40,7 @@ public class NoteController {
             @PathVariable("post_id") Long postId
     ){
         HashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("similar-posts", noteService.findSimilarPosts(category));
+        result.put("similar-posts", noteService.findSimilarPosts(category, 2L));
         result.put("next-prev", noteService.getPrevAndNextPosts(postId, 2L));
         return new ResponseEntity(result, HttpStatus.OK);
     }

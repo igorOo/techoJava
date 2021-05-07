@@ -38,7 +38,7 @@ public class NewController {
             //@PathVariable("post_id") Long postId
     ){
         HashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("similar-posts", newsService.findSimilarPosts(category));
+        result.put("similar-posts", newsService.findSimilarPosts(category, 1L));
         result.put("top-reader-posts", newsService.findTopReaderPosts());
         result.put("random-image-posts", newsService.findRandomImagePosts());
         return result;
