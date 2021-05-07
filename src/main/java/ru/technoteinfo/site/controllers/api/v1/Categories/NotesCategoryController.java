@@ -16,10 +16,11 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value="/news")
-public class NewsCategoryController {
+@RequestMapping(value="/notes")
+public class NotesCategoryController {
     @Autowired
-    private PostsCategoryService newsCategoryService;
+    private PostsCategoryService notesCategoryService;
+
 
     @RequestMapping(value = "",
             method = RequestMethod.GET,
@@ -33,15 +34,14 @@ public class NewsCategoryController {
             page = 1;
         }
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
-
-        int count = newsCategoryService.getCountPostsByType(1L);
+        int count = notesCategoryService.getCountPostsByType(2L);
         int currentPage = pageable.getPageNumber();
         int lastPage = (int) Math.ceil((double)count/pageSize);
         HashMap<String, Integer> pages = new HashMap<>();
         pages.put("currentPage", currentPage);
         pages.put("lastPage", lastPage);
 
-        List<TopPost> list = newsCategoryService.getPostsByType(1L,false, false, page, pageSize);
+        List<TopPost> list = notesCategoryService.getPostsByType(2L,false, false, page, pageSize);
         result.put("posts", list);
         result.put("pages", pages);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -61,16 +61,18 @@ public class NewsCategoryController {
         }
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
 
-        int count = newsCategoryService.getCountPostsInCategory(translit);
+        int count = notesCategoryService.getCountPostsInCategory(translit);
         int currentPage = pageable.getPageNumber();
         int lastPage = (int) Math.ceil((double)count/pageSize);
         HashMap<String, Integer> pages = new HashMap<>();
         pages.put("currentPage", currentPage);
         pages.put("lastPage", lastPage);
 
-        List<TopPost> list = newsCategoryService.getCategoryList(translit, 1L, page, pageSize);
+        List<TopPost> list = notesCategoryService.getCategoryList(translit, 2L, page, pageSize);
         result.put("posts", list);
         result.put("pages", pages);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 }

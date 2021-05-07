@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @NoArgsConstructor
-public class NewsCategoryService {
+public class PostsCategoryService {
     @Autowired
     private CategoryRepo categoryRepo;
 
@@ -28,9 +28,9 @@ public class NewsCategoryService {
     @Autowired
     private CommonController common;
 
-    public List<TopPost> getCategoryList(String translit, int page, int pageSize){
+    public List<TopPost> getCategoryList(String translit, Long typePost, int page, int pageSize){
         Sort sort = Sort.by(Sort.Direction.DESC, "sort");
-        Category category = categoryRepo.findFirstByTranslitAndTypePost_PostType(translit, 1L, sort);
+        Category category = categoryRepo.findFirstByTranslitAndTypePost_PostType(translit, typePost, sort);
         List<TopPost> list = postsRepo.findPostsInCategoryAndType(category.getTranslit(), category.getTypePost().getPostType(), false, true, page, pageSize);
         common.formatMeta(list);
         return list;
