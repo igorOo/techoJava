@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
+import ru.technoteinfo.site.pojo.GalleryResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
@@ -116,4 +117,22 @@ public class CommonController {
     public String getNoteUrl(String slug) { return urlSecurity+"://"+urlDomain+"/note/"+slug;}
 
     public String getNewUrl(String slug) { return urlSecurity+"://"+urlDomain+"/new/"+slug;}
+
+    public List<GalleryResponse> formatGalerryList(List<GalleryResponse> list){
+        for (GalleryResponse item: list){
+            String image = item.getFilename();
+            if (image != null){
+                item.setFilename(securityImage+"://"+domainImage+"/images/gallery/thumb/"+item.getCategory().getId()+"/"+image);
+            }
+        }
+        return list;
+    }
+
+    public GalleryResponse formatGalleryItem(GalleryResponse item){
+        String image = item.getFilename();
+        if (image != null){
+            item.setFilename(securityImage+"://"+domainImage+"/images/gallery/thumb/"+item.getCategory().getId()+"/"+image);
+        }
+        return item;
+    }
 }
