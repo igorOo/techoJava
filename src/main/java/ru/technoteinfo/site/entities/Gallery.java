@@ -35,6 +35,7 @@ public class Gallery {
 
     public GalleryResponse toGalleryResponse(){
         return new GalleryResponse(
+            this.getId(),
             this.getName().trim(),
             this.getTranslit(),
             this.getResolution().trim(),

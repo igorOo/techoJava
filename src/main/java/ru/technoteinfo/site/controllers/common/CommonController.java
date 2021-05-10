@@ -56,10 +56,6 @@ public class CommonController {
                 case 2:
                     typeString = "note";
                     break;
-                case 3:
-                    typeString = "gallery";
-                    break;
-
             }
             item.setUrl(urlSecurity+"://"+urlDomain+"/"+typeString+"/"+item.getTranslit());
         }
@@ -80,9 +76,6 @@ public class CommonController {
                         break;
                     case 2:
                         url.append("/notes/category");
-                        break;
-                    case 3:
-                        url.append("/gallery/category");
                         break;
                 }
                 url.append("/"+post.getCategory().getTranslit());
@@ -124,6 +117,7 @@ public class CommonController {
             if (image != null){
                 item.setFilename(securityImage+"://"+domainImage+"/images/gallery/thumb/"+item.getCategory().getId()+"/"+image);
             }
+            item.setUrl(urlSecurity+"://"+urlDomain+"/gallery/"+item.getTranslit());
         }
         return list;
     }
@@ -133,6 +127,8 @@ public class CommonController {
         if (image != null){
             item.setFilename(securityImage+"://"+domainImage+"/images/gallery/thumb/"+item.getCategory().getId()+"/"+image);
         }
+        item.setUrl(urlSecurity+"://"+urlDomain+"/gallery/"+item.getTranslit());
         return item;
     }
+
 }

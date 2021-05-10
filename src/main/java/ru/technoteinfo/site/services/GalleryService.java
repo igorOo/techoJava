@@ -28,7 +28,7 @@ public class GalleryService {
         HashMap<String, Integer> pages = new HashMap<>();
         Page<Gallery> page = galleryRepository.findAll(pageable);
         pages.put("currentPage", page.getNumber()+1);
-        pages.put("lastPage", page.getTotalPages()+1);
+        pages.put("lastPage", page.getTotalPages());
 
         result.put("data", page.getContent().stream()
                 .map(item -> item.toGalleryResponse())
