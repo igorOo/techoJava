@@ -38,4 +38,24 @@ public class GalleryController {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/category/{translit}", method = RequestMethod.GET)
+    public ResponseEntity<?> category(
+            @PathVariable(name = "translit") String category,
+            @RequestParam(name = "page", required = false) Integer page
+    ){
+        final int pageSize = 9;
+        if (page == null){
+            page = 0;
+        }else{
+            page--;
+        }
+        HashMap<String, Object> result = new HashMap<>();
+        Pageable sort = PageRequest.of(page, pageSize, Sort.by("dateEdit").descending());
+        try {
+            result = galleryService.getListImagesInCategory (category, sort);
+        }catch (Exception e){
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

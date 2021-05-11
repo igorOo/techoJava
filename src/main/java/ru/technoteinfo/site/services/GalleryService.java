@@ -37,4 +37,19 @@ public class GalleryService {
         result.put("pages", pages);
         return result;
     }
+
+    public HashMap<String, Object> getListImagesInCategory(String category, Pageable pageable){
+        HashMap<String, Object> result = new HashMap<>();
+        HashMap<String, Integer> pages = new HashMap<>();
+        Page<Gallery> page = galleryRepository.findByCategory_Translit(category, pageable);
+        pages.put("currentPage", page.getNumber()+1);
+        pages.put("lastPage", page.getTotalPages());
+
+        result.put("data", page.getContent().stream()
+                .map(item -> item.toGalleryResponse())
+                .peek(item -> commonController.formatGalleryItem(item))
+                .collect(Collectors.toList()));
+        result.put("pages", pages);
+        return result;
+    }
 }
