@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Gallery;
+import ru.technoteinfo.site.pojo.GalleryResponse;
 import ru.technoteinfo.site.repositories.GalleryRepository;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class GalleryService {
 
         result.put("data", page.getContent().stream()
                 .map(item -> item.toGalleryResponse())
-                .peek(item -> commonController.formatGalleryItem(item))
+                .peek(item -> commonController.formatGalleryItem(item, false))
                 .collect(Collectors.toList()));
         result.put("pages", pages);
         return result;
@@ -47,9 +48,19 @@ public class GalleryService {
 
         result.put("data", page.getContent().stream()
                 .map(item -> item.toGalleryResponse())
-                .peek(item -> commonController.formatGalleryItem(item))
+                .peek(item -> commonController.formatGalleryItem(item, false))
                 .collect(Collectors.toList()));
         result.put("pages", pages);
+        return result;
+    }
+
+    public GalleryResponse getDetailGallery(String translit){
+        Gallery gallery = galleryRepository.findFirstByTranslit(translit);
+        GalleryResponse result = null;
+        if (gallery != null){
+            result = gallery.toGalleryResponse();
+            commonController.formatGalleryItem(result, true);
+        }
         return result;
     }
 }

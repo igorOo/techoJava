@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.entities.Gallery;
+import ru.technoteinfo.site.pojo.GalleryResponse;
 import ru.technoteinfo.site.services.GalleryService;
 
 import java.util.HashMap;
@@ -57,5 +58,17 @@ public class GalleryController {
         }catch (Exception e){
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{translit}", method = RequestMethod.GET)
+    public ResponseEntity<?> detail(
+            @PathVariable(name = "translit") String translit
+    ){
+        GalleryResponse result = galleryService.getDetailGallery(translit);
+        if (result != null){
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }

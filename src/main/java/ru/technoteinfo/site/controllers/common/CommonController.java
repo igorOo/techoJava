@@ -122,10 +122,14 @@ public class CommonController {
         return list;
     }
 
-    public GalleryResponse formatGalleryItem(GalleryResponse item){
+    public GalleryResponse formatGalleryItem(GalleryResponse item, boolean detail){
+        String urlPart = "thumb";
+        if (detail == true){
+            urlPart = "view";
+        }
         String image = item.getFilename();
         if (image != null){
-            item.setFilename(securityImage+"://"+domainImage+"/images/gallery/thumb/"+item.getCategory().getId()+"/"+image);
+            item.setFilename(securityImage+"://"+domainImage+"/images/gallery/"+urlPart+"/"+item.getCategory().getId()+"/"+image);
         }
         item.setUrl(urlSecurity+"://"+urlDomain+"/gallery/"+item.getTranslit());
         return item;

@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface GalleryRepository extends JpaRepository<Gallery, Long> {
     Page<Gallery> findByCategory_Translit(String category, Pageable pageable);
+    Gallery findFirstByTranslit(String translit);
 }
