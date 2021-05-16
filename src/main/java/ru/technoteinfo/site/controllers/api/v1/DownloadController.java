@@ -5,10 +5,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.services.StorageService;
 
 @RestController
@@ -19,7 +16,7 @@ public class DownloadController {
     @Autowired
     private StorageService storageService;
 
-    @RequestMapping(value = "/{translit}/{resolution}")
+    @RequestMapping(value = "/{translit}/{resolution}", method = RequestMethod.POST)
     public ResponseEntity<?> downloadFile(
             @PathVariable("translit") String translit,
             @PathVariable("resolution") String resolution
