@@ -70,7 +70,7 @@ public class StorageService {
         tmpDir = tmpDir.replaceAll("\\\\", "/");
         BufferedImage originalImage = ImageIO.read(file.toFile());
         if (width<heigth){
-            originalImage = Scalr.c
+           // originalImage = Scalr.c
         }
         BufferedImage resultImage = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT, width, heigth, Scalr.OP_ANTIALIAS);
 //        Image resizedImage = originalImage.getScaledInstance(width, heigth, Image.SCALE_SMOOTH);
