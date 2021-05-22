@@ -1,6 +1,7 @@
 package ru.technoteinfo.site.services;
 
 import javassist.NotFoundException;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -46,9 +47,10 @@ public class StorageService {
         try {
             Path file = Paths.get(folderPath + "/main/"+ image.getCategory().getId() + "/" + image.getFilename());
 
-            BufferedImage resizedImage = resizeImage(file, resolut[0], resolut[1]);
+            String resizedImagePath = resizeImage(file, resolut[0], resolut[1]);
+            Path resizedImage = Paths.get(resizedImagePath);
 
-            Resource resource = new UrlResource(file.toUri());
+            Resource resource = new UrlResource(resizedImage.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             }
@@ -63,20 +65,25 @@ public class StorageService {
     }
 
     //TODO::запихать в отдельный поток
-    public BufferedImage resizeImage(Path file, int width, int heigth) throws IOException {
+    public String resizeImage(Path file, int width, int heigth) throws IOException {
         String tmpDir = System.getProperty("java.io.tmpdir");
         tmpDir = tmpDir.replaceAll("\\\\", "/");
         BufferedImage originalImage = ImageIO.read(file.toFile());
-        Image resizedImage = originalImage.getScaledInstance(width, heigth, Image.SCALE_SMOOTH);
-        BufferedImage resultImage = new BufferedImage(width, heigth, BufferedImage.TYPE_INT_ARGB);
-        resultImage.getGraphics().drawImage(resizedImage, 0,0,null);
-        return resultImage;
-//        String fileName = tmpDir+UUID.randomUUID().toString()+".jpg";
-//        if (ImageIO.write(resultImage, "jpg", new File(fileName))){
-//            return resultImage;
-//        }else{
-//            throw new IOException("Не удалось создать новый файл");
-//        }
+        if (width<heigth){
+            originalImage = Scalr.c
+        }
+        BufferedImage resultImage = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT, width, heigth, Scalr.OP_ANTIALIAS);
+//        Image resizedImage = originalImage.getScaledInstance(width, heigth, Image.SCALE_SMOOTH);
+//        BufferedImage resultImage = new BufferedImage(width, heigth, BufferedImage.TYPE_INT_ARGB);
+//        resultImage.getGraphics().drawImage(resizedImage, 0,0,null);
+//        return resultImage;
+        String fileName = tmpDir+UUID.randomUUID().toString()+".jpg";
+        File savedFile = new File(fileName);
+        if (ImageIO.write(resultImage, "jpg", savedFile)){
+            return fileName;
+        }else{
+            throw new IOException("Не удалось создать новый файл");
+        }
     }
 
     //TODO::запихать в отдельный поток
