@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.technoteinfo.site.pojo.GalleryDownloadRequest;
 import ru.technoteinfo.site.services.StorageService;
 
 @RestController
@@ -16,14 +17,14 @@ public class DownloadController {
     @Autowired
     private StorageService storageService;
 
-    @RequestMapping(value = "/{translit}/{resolution}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{translit}", method = RequestMethod.POST)
     public ResponseEntity<?> downloadFile(
             @PathVariable("translit") String translit,
-            @PathVariable("resolution") String resolution
+            @RequestBody GalleryDownloadRequest body
     ){
         Resource resource = null;
         try {
-            resource = storageService.downloadToBrowser(translit, resolution);
+            resource = storageService.downloadToBrowser(translit, body);
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,

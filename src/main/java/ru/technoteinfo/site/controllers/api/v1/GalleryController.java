@@ -13,6 +13,7 @@ import ru.technoteinfo.site.pojo.GalleryResponse;
 import ru.technoteinfo.site.services.GalleryService;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/gallery")
@@ -64,8 +65,12 @@ public class GalleryController {
     public ResponseEntity<?> detail(
             @PathVariable(name = "translit") String translit
     ){
-        GalleryResponse result = galleryService.getDetailGallery(translit);
-        if (result != null){
+        GalleryResponse image = galleryService.getDetailGallery(translit);
+        if (image != null){
+            HashMap<String, List<String>> resolutions = galleryService.getListResolutions(image.getResolution());
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("image", image);
+            result.put("resolutions", resolutions);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }else{
             return ResponseEntity.notFound().build();
