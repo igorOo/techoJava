@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.TechnoUserDetail;
 import ru.technoteinfo.site.entities.User;
 import ru.technoteinfo.site.repositories.UserRepository;
@@ -23,6 +24,9 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CommonController commonController;
+
     @RequestMapping("/profile")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<?> profile(
@@ -33,6 +37,7 @@ public class UserController {
         if (user == null){
             return new ResponseEntity<>("Пользователь не найден", HttpStatus.FORBIDDEN);
         }
+        user.setAvatar(commonController.getAvatarUrl(user.getAvatar()));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
