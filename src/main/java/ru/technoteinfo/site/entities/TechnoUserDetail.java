@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,14 @@ public class TechnoUserDetail implements UserDetails {
     private boolean active;
     private List<GrantedAuthority> authorities;
 
+    private String FirstName;
+    private String LastName;
+    private String avatar;
+    private Date birthDate;
+    private GenderEnum gender;
+    private Date lastVisit;
+    private Date dateCreate;
+
     public TechnoUserDetail(User user) {
         this.id = user.getId();
         this.userName = user.getName();
@@ -31,6 +40,14 @@ public class TechnoUserDetail implements UserDetails {
         this.authorities = user.getRoles().stream()
                 .map((Roles role) -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
+
+        this.FirstName = user.getFirstName();
+        this.LastName = user.getLastName();
+        this.avatar = user.getAvatar();
+        this.birthDate = user.getBirth();
+        this.gender = user.getGender();
+        this.lastVisit = user.getLast_visit();
+        this.dateCreate = user.getDate_create();
     }
 
     @Override
