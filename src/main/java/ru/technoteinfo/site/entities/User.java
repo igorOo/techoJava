@@ -103,6 +103,8 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Roles> roles;
 
+    private String about;
+
     public boolean isActive(){
         return status == 1;
     }
