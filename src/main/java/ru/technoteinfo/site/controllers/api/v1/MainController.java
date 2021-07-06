@@ -1,19 +1,31 @@
 package ru.technoteinfo.site.controllers.api.v1;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.technoteinfo.site.services.MainService;
 import ru.technoteinfo.site.services.PostsService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class MainController {
     @Autowired
     private PostsService postsService;
+
+    @Autowired
+    private MainService mainService;
 
     @GetMapping("/mainpage")
     public HashMap<String, Object> mainpage(
@@ -35,4 +47,22 @@ public class MainController {
         return result;
     }
 
+    @GetMapping("/mainmenu")
+    public ResponseEntity<?> mainMenu(){
+        StringBuilder menuString = new StringBuilder();
+        try{
+            File file = new File(System.getProperty("user.dir")+"/config/mainMenu.json");
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(new FileInputStream(file)));
+            while (reader.ready()){
+                menuString.append(reader.readLine());
+            }
+            if (menuString.length() == 0){
+                    throw new IOException("error parse json");
+            }
+        }catch (IOException e){
+            menuString.append(mainService.createMenu());
+        }
+        return new ResponseEntity<>(menuString, HttpStatus.OK);
+    }
 }
