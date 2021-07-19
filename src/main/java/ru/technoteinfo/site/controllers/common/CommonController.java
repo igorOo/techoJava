@@ -104,7 +104,11 @@ public class CommonController {
     }
 
     public String getAvatarUrl(String avatar){
-        return securityImage+"://"+domainImage+"/images/profiles/"+avatar;
+        if (avatar.matches("^http.*")){
+            return avatar;
+        }else{
+            return securityImage+"://"+domainImage+"/"+avatar;
+        }
     }
 
     public String getNoteUrl(String slug) { return urlSecurity+"://"+urlDomain+"/note/"+slug;}

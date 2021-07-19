@@ -9,9 +9,11 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.security.util.InMemoryResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
+import ru.technoteinfo.site.controllers.common.FilesController;
 import ru.technoteinfo.site.entities.Gallery;
 import ru.technoteinfo.site.pojo.GalleryDownloadRequest;
 import ru.technoteinfo.site.repositories.GalleryRepository;
+import ru.technoteinfo.site.services.common.FilesService;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -38,6 +40,9 @@ public class StorageService {
 
     @Autowired
     private GalleryRepository galleryRepository;
+
+    @Autowired
+    private FilesService filesService;
 
     public Resource downloadToBrowser(String translit, GalleryDownloadRequest body) throws Exception, NotFoundException {
         Gallery image = galleryRepository.findFirstByTranslit(translit);
@@ -73,15 +78,7 @@ public class StorageService {
     //TODO::запихать в отдельный поток
     public String resizeImage(Path file, int width, int heigth) throws IOException {
         String tmpDir = System.getProperty("java.io.tmpdir");
-        BufferedImage originalImage = ImageIO.read(file.toFile());
-        if (width<heigth){
-            double scale = (double)width/heigth;
-            double scaledWidth = (double) originalImage.getHeight()*scale;
-            int x1 = (originalImage.getWidth() - (int)scaledWidth)/2;
-            int y1 = 0;
-            originalImage = Scalr.crop(originalImage, x1, y1, (int)scaledWidth, originalImage.getHeight());
-        }
-        BufferedImage resultImage = Scalr.resize(originalImage, Scalr.Method.QUALITY, Scalr.Mode.FIT_EXACT, width, heigth, Scalr.OP_ANTIALIAS);
+        BufferedImage resultImage = filesService.resizeImage(ImageIO.read(file.toFile()), width, heigth);
         String fileName = tmpDir+UUID.randomUUID().toString()+".jpg";
         File savedFile = new File(fileName);
         if (ImageIO.write(resultImage, "jpg", savedFile)){
