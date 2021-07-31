@@ -6,10 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -18,14 +15,12 @@ import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.TechnoUserDetail;
 import ru.technoteinfo.site.entities.User;
 import ru.technoteinfo.site.repositories.UserRepository;
-import ru.technoteinfo.site.services.StorageService;
 import ru.technoteinfo.site.services.UserService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")

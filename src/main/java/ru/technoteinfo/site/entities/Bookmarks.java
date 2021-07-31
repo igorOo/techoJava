@@ -16,12 +16,17 @@ public class Bookmarks {
     @Column(name = "id", columnDefinition = "serial")
     private Long id;
 
-
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = true, insertable = false, updatable = false)
     private User user;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
     @OneToOne
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "post_id", nullable = false, insertable = false, updatable = false)
     private Posts posts;
+
+    @Column(name = "post_id", nullable = false)
+    private Long postId;
 }

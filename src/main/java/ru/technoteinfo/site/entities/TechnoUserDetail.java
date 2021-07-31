@@ -82,6 +82,6 @@ public class TechnoUserDetail implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return active;
+        return this.active;
     }
 }
