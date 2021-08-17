@@ -1,7 +1,9 @@
 package ru.technoteinfo.site.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.flywaydb.core.internal.database.postgresql.PostgreSQLType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -14,7 +16,8 @@ import java.net.InetAddress;
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "statistic_post_read")
 public class StatisticPostRead {

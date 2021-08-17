@@ -3,7 +3,9 @@ package ru.technoteinfo.site.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
@@ -11,7 +13,8 @@ import java.math.BigInteger;
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Category {
 

@@ -1,6 +1,3 @@
-ALTER TABLE "public"."user"
-    ADD PRIMARY KEY ("id");
-
 CREATE TABLE "public"."roles" (
      "id" serial8,
      "name" varchar(255) NOT NULL,

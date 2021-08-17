@@ -2,7 +2,9 @@ package ru.technoteinfo.site.entities;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 
@@ -13,7 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Posts implements Serializable {
 

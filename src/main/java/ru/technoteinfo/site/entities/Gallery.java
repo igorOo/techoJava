@@ -1,7 +1,9 @@
 package ru.technoteinfo.site.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.technoteinfo.site.pojo.CategoryResponse;
 import ru.technoteinfo.site.pojo.GalleryResponse;
 
@@ -9,7 +11,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "images")
 public class Gallery {

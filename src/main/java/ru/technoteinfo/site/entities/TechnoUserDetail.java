@@ -1,6 +1,8 @@
 package ru.technoteinfo.site.entities;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
 public class TechnoUserDetail implements UserDetails {
     private Long id;
     private String email;
