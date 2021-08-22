@@ -4,6 +4,11 @@ CREATE TABLE "public"."roles" (
      PRIMARY KEY ("id")
 );
 
+INSERT INTO "public"."roles"("name") VALUES ('ROLE_ADMIN');
+INSERT INTO "public"."roles"("name") VALUES ('ROLE_USER');
+INSERT INTO "public"."roles"("name") VALUES ('ROLE_AUTHOR');
+INSERT INTO "public"."roles"("name") VALUES ('ROLE_MODERATOR');
+
 CREATE TABLE "public"."user_roles" (
      "id" serial8,
      "role_id" int8 NOT NULL,
@@ -20,3 +25,4 @@ CREATE INDEX "user_roles_role_id_index" ON "public"."user_roles" (
 CREATE INDEX "user_roles_user_id_index" ON "public"."user_roles" (
   "user_id"
 );
+

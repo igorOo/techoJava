@@ -2,6 +2,7 @@ package ru.technoteinfo.site.controllers.api.v1;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.task.TaskExecutor;
@@ -22,9 +23,11 @@ import ru.technoteinfo.site.entities.TechnoUserDetail;
 import ru.technoteinfo.site.entities.User;
 import ru.technoteinfo.site.pojo.JwtResponse;
 import ru.technoteinfo.site.pojo.LoginRequest;
+import ru.technoteinfo.site.pojo.RegisterRequest;
 import ru.technoteinfo.site.repositories.RoleRepository;
 import ru.technoteinfo.site.repositories.UserRepository;
 import ru.technoteinfo.site.services.MailService;
+import ru.technoteinfo.site.services.UserService;
 
 import javax.mail.MessagingException;
 import java.text.Format;
@@ -65,6 +68,9 @@ public class AuthController {
     @Autowired
     private TaskExecutor taskExecutor;
 
+    @Autowired
+    private UserService userService;
+
     private static Log log = LogFactory.getLog(MailService.class);
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -94,27 +100,27 @@ public class AuthController {
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            @RequestParam("confirmPassword") String confirmPassword
+            @RequestBody RegisterRequest registerRequest
     ){
-        if (userRepository.existsByEmail(email)){
-            return ResponseEntity.badRequest().body("Такая почта уже зарегистрирована");
+        if (userRepository.existsByEmail(registerRequest.getEmail())){
+            JSONObject json = new JSONObject();
+            json.put("status", "error");
+            json.put("data", "Такая почта уже зарегистрирована");
+            return ResponseEntity.badRequest().body(json.toString());
         }
-        if (!password.equals(confirmPassword)){
-            return ResponseEntity.badRequest().body("Пароли не совпадают");
+        if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())){
+            JSONObject json = new JSONObject();
+            json.put("status", "error");
+            json.put("data", "Пароли не совпадают");
+            return ResponseEntity.badRequest().body(json.toString());
         }
-        List<Roles> roles = new ArrayList<>();
-        Roles role = roleRepository.findByName(RolesEnum.ROLE_USER);
-        roles.add(role);
-
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setAuth_key(CommonController.randomString(25));
-        user.setRoles(roles);
-
-        userRepository.save(user);
+        User user = userService.registerUser(registerRequest.getEmail(), registerRequest.getPassword());
+        if (user == null){
+            JSONObject json = new JSONObject();
+            json.put("status", "error");
+            json.put("data", "Произошла ошибка при регистрации пользователя");
+            return ResponseEntity.badRequest().body(json.toString());
+        }
         taskExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -126,7 +132,10 @@ public class AuthController {
                 }
             }
         });
-        return  ResponseEntity.ok("Пользователь зарегистрирован");
+        JSONObject json = new JSONObject();
+        json.put("status", "success");
+        json.put("data", "Пользователь зарегистрирован");
+        return  ResponseEntity.ok(json.toString());
     }
 
     @GetMapping(value = "/testmail")

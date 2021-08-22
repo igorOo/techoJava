@@ -25,12 +25,11 @@ import java.util.List;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @PrimaryKeyJoinColumn
-    @Column(columnDefinition = "serial")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     @JsonView(JsonViewer.Internal.class)
     private String name;
 
@@ -99,10 +98,10 @@ public class User implements Serializable {
     @JsonView(JsonViewer.Internal.class)
     private Date last_visit;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany()
     @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+            joinColumns = @JoinColumn(name = "user_id", insertable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "role_id", insertable = false, updatable = false)
     )
     @JsonIgnore
     private List<Roles> roles;

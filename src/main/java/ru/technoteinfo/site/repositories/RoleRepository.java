@@ -5,5 +5,5 @@ import ru.technoteinfo.site.entities.Roles;
 import ru.technoteinfo.site.entities.RolesEnum;
 
 public interface RoleRepository extends JpaRepository<Roles, Long> {
-    Roles findByName(RolesEnum name);
+    Roles findByName(String name);
 }
