@@ -1,5 +1,6 @@
 package ru.technoteinfo.site.repositories.impl;
 
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.technoteinfo.site.controllers.common.CommonController;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.*;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.lang.reflect.Field;
@@ -375,5 +377,33 @@ public class PostsRepoImpl implements PostsRepo {
         return result;
     }
 
+    public List<TopPost> searchPosts(@NotNull String search){
+        List<Object[]> list = entityManager.createNativeQuery("SELECT id, category_id, name, translit,preview,main_image,author,rating, date_create, date_edit,public, type, cast(ts_rank(post_vector, to_tsquery(:search)) as varchar) AS rank" +
+                " FROM posts WHERE post_vector @@ to_tsquery(:search) ORDER BY rank DESC")
+                .setParameter("search", search)
+                .setMaxResults(20)
+                .getResultList();
+        List<TopPost> result = new LinkedList<>();
+        for (Object[] item : list){
+            //TODO: оптимизировать это место
+            Posts post = findPostByTranslit(item[3].toString(), true, false);
+            result.add(new TopPost(
+                    new BigInteger(item[0].toString()).longValue(), //id
+                    item[2].toString(), //name
+                    item[3].toString(), //translit
+                    item[4].toString(), //preview
+                    item[5].toString(), //main_image
+                    new BigInteger(item[11].toString()).longValue(), //type
+                    item[8].toString(), //date_create
+                    post.getCategory().getName(), //category_name
+                    post.getCategory().getTranslit(), //category_translit
+                    new BigInteger(item[1].toString()).longValue(), //category_id
+                    null, //url
+                    post.getAuthor().getFirstName(), //first_name
+                    post.getAuthor().getLastName() //last_name
+            ));
+        }
+        return result;
+    }
 
 }

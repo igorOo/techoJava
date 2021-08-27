@@ -12,6 +12,7 @@ import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -104,7 +105,7 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id", insertable = false, updatable = false)
     )
     @JsonIgnore
-    private List<Roles> roles;
+    private List<Roles> roles = new ArrayList<>();
 
     private String about;
 
