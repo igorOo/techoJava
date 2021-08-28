@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.configuration.jwt.JwtUtils;
-import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.controllers.common.MailTextController;
-import ru.technoteinfo.site.entities.Roles;
-import ru.technoteinfo.site.entities.RolesEnum;
 import ru.technoteinfo.site.entities.TechnoUserDetail;
 import ru.technoteinfo.site.entities.User;
 import ru.technoteinfo.site.pojo.JwtResponse;
@@ -32,7 +30,6 @@ import ru.technoteinfo.site.services.UserService;
 import javax.mail.MessagingException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -138,20 +135,9 @@ public class AuthController {
         return  ResponseEntity.ok(json.toString());
     }
 
-    @GetMapping(value = "/testmail")
-    public String testMail(){
-
-        taskExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mailService.sendMail("igorek0_0@mail.ru", "hi", "Текст");
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                    log.error("Failed to send email to: igorek0_0@mail.ru reason: "+e.getMessage());
-                }
-            }
-        });
-        return "ok";
+    @GetMapping("/activate-account")
+    public ResponseEntity<?> confirmUserEmail(){
+        return new ResponseEntity<>("user", HttpStatus.OK);
     }
+
 }

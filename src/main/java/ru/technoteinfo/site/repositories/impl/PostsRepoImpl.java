@@ -377,11 +377,20 @@ public class PostsRepoImpl implements PostsRepo {
         return result;
     }
 
-    public List<TopPost> searchPosts(@NotNull String search){
+    public int getCountSearchResult(@NotNull String search){
+        Object result = entityManager.createNativeQuery("SELECT count(cast(ts_rank(post_vector, to_tsquery(:search)) as varchar)) AS rank" +
+                        " FROM posts WHERE post_vector @@ to_tsquery(:search) ORDER BY rank DESC")
+                .setParameter("search", search)
+                .getSingleResult();
+        return Integer.parseInt(result.toString());
+    }
+
+    public List<TopPost> searchPosts(@NotNull String search, int perPage, int start){
         List<Object[]> list = entityManager.createNativeQuery("SELECT id, category_id, name, translit,preview,main_image,author,rating, date_create, date_edit,public, type, cast(ts_rank(post_vector, to_tsquery(:search)) as varchar) AS rank" +
                 " FROM posts WHERE post_vector @@ to_tsquery(:search) ORDER BY rank DESC")
                 .setParameter("search", search)
-                .setMaxResults(20)
+                .setMaxResults(perPage)
+                .setFirstResult(start)
                 .getResultList();
         List<TopPost> result = new LinkedList<>();
         for (Object[] item : list){

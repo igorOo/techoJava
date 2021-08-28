@@ -20,10 +20,8 @@ public class SearchService {
     @Autowired
     private CommonController commonController;
 
-    public List<TopPost> search(@NotNull String search){
-        List<TopPost> result = new ArrayList<>();
-        result = commonController.formatMeta(postsRepoImpl.searchPosts(search));
-        return result;
+    public List<TopPost> search(@NotNull String search, int perPage, int page){
+        return commonController.formatMeta(postsRepoImpl.searchPosts(search, perPage, (page - 1) * perPage));
     }
 
 }
