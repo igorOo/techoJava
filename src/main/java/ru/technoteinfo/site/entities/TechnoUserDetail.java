@@ -49,8 +49,8 @@ public class TechnoUserDetail implements UserDetails {
         this.avatar = user.getAvatar();
         this.birthDate = user.getBirth();
         this.gender = user.getGender();
-        this.lastVisit = user.getLast_visit();
-        this.dateCreate = user.getDate_create();
+        this.lastVisit = user.getLastVisit();
+        this.dateCreate = user.getDateCreate();
     }
 
     @Override

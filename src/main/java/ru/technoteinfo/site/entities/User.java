@@ -52,7 +52,7 @@ public class User implements Serializable {
 
     @Column(name = "auth_key")
     @JsonIgnore
-    private String auth_key;
+    private String authKey;
 
     @Column(name = "access_token")
     @JsonIgnore
@@ -81,7 +81,7 @@ public class User implements Serializable {
 
     @Column(name = "id_social")
     @JsonView(JsonViewer.Internal.class)
-    private String id_social;
+    private String idSocial;
 
     @Column(name = "public")
     @JsonView(JsonViewer.Internal.class)
@@ -89,15 +89,15 @@ public class User implements Serializable {
 
     @Column(name = "date_create")
     @JsonView(JsonViewer.Internal.class)
-    private Date date_create;
+    private Date dateCreate;
 
     @Column(name = "date_edit")
     @JsonView(JsonViewer.Internal.class)
-    private Date date_edit;
+    private Date dateEdit;
 
     @Column(name = "last_visit")
     @JsonView(JsonViewer.Internal.class)
-    private Date last_visit;
+    private Date lastVisit;
 
     @OneToMany()
     @JoinTable(name = "user_roles",
