@@ -169,13 +169,14 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<executable>true</executable>
+					<excludeDevtools>true</excludeDevtools>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<configuration>
-					<url>jdbc:postgresql://192.168.0.5:5433/techno?currentSchema=public</url>
+					<url>jdbc:postgresql://192.168.0.5:5433/techno</url>
 					<user>postgres</user>
 					<password>123</password>
 					<schemas>

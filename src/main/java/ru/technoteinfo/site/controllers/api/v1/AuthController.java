@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.configuration.jwt.ConfirmEmailAuthenticationToken;
@@ -179,7 +180,9 @@ public class AuthController {
                 }
             });
         }
-        return new ResponseEntity<>("На Вашу почту отправлено письмо с сылкой для сброса пароля. Необходимо перейти по ней", HttpStatus.OK);
+        json.put("status", "success");
+        json.put("message", "На Вашу почту отправлено письмо с сылкой для сброса пароля. Необходимо перейти по ней");
+        return new ResponseEntity<>(json.toString(), HttpStatus.OK);
     }
 
     @RequestMapping("/reset-password-code")
@@ -197,7 +200,41 @@ public class AuthController {
             return new ResponseEntity<>(json.toString(), HttpStatus.OK);
         }else{
             json.put("status", "error");
-            json.put("message", "Неверный проверосный код");
+            json.put("message", "Неверный проверочный код");
+            return new ResponseEntity<>(json.toString(), HttpStatus.NOT_IMPLEMENTED);
+        }
+    }
+
+    @RequestMapping("/change-password-finish")
+    public ResponseEntity<?> resetPasswordFinish(@RequestBody Map<String, String> body){
+        String code = ValidatorController.validateCode(body.get("code"));
+        String password = body.get("password");
+        String confirmPassword = body.get("confirmPassword");
+        JSONObject json = new JSONObject();
+        if (password == null || confirmPassword == null){
+            json.put("status", "error");
+            json.put("message", "Пустой пароль или подтверждение пароля");
+            return new ResponseEntity<>(json.toString(), HttpStatus.BAD_REQUEST);
+        }
+        if (!password.equals(confirmPassword)){
+            json.put("status", "error");
+            json.put("message", "Пароли не совпадают");
+            return new ResponseEntity<>(json.toString(), HttpStatus.BAD_REQUEST);
+        }
+        if (code == null){
+            json.put("status", "error");
+            json.put("message", "Проверочный код не может быть пустым");
+            return new ResponseEntity<>(json.toString(), HttpStatus.BAD_REQUEST);
+        }
+        User user = userRepository.findByAuthKey(code);
+        if (user != null){
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+            json.put("status", "success");
+            return new ResponseEntity<>(json.toString(), HttpStatus.OK);
+        }else{
+            json.put("status", "error");
+            json.put("message", "Неверный проверочный код");
             return new ResponseEntity<>(json.toString(), HttpStatus.NOT_IMPLEMENTED);
         }
     }
