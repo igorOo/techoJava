@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.CategoryRepo;
-import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
+import ru.technoteinfo.site.repositories.impl.PostsRepositoryImpl;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PostsService {
     @Autowired
-    private PostsRepoImpl postsRepo;
+    private PostsRepositoryImpl postsRepo;
 
     @Autowired
     private CategoryRepo categoryRepo;

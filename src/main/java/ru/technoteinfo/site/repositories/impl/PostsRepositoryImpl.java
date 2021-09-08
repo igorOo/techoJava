@@ -6,21 +6,16 @@ import org.springframework.stereotype.Repository;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.*;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
-import ru.technoteinfo.site.pojo.NextPrevResponse;
-import ru.technoteinfo.site.repositories.PostsRepo;
+import ru.technoteinfo.site.pojo.response.NextPrevResponse;
+import ru.technoteinfo.site.repositories.PostsRepository;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.math.BigInteger;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.lang.reflect.Field;
 
 @Repository
-public class PostsRepoImpl implements PostsRepo {
+public class PostsRepositoryImpl implements PostsRepository {
     @PersistenceContext
     private EntityManager entityManager;
 

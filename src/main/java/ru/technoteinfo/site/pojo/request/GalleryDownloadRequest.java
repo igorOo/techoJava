@@ -1,4 +1,4 @@
-package ru.technoteinfo.site.pojo;
+package ru.technoteinfo.site.pojo.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

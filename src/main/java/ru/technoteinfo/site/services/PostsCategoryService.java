@@ -6,14 +6,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Category;
-import ru.technoteinfo.site.entities.Posts;
-import ru.technoteinfo.site.entities.PostsType;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import ru.technoteinfo.site.repositories.CategoryRepo;
-import ru.technoteinfo.site.repositories.PostsRepo;
-import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
+import ru.technoteinfo.site.repositories.impl.PostsRepositoryImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +19,7 @@ public class PostsCategoryService {
     private CategoryRepo categoryRepo;
 
     @Autowired
-    private PostsRepoImpl postsRepo;
+    private PostsRepositoryImpl postsRepo;
 
     @Autowired
     private CommonController common;

@@ -6,21 +6,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.technoteinfo.site.entities.Comments;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
-import ru.technoteinfo.site.pojo.CommentRequest;
+import ru.technoteinfo.site.pojo.request.CommentRequest;
 import ru.technoteinfo.site.services.CommentsService;
 
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/comments")

@@ -1,16 +1,12 @@
 package ru.technoteinfo.site.controllers.common;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
-import ru.technoteinfo.site.pojo.GalleryResponse;
+import ru.technoteinfo.site.pojo.response.GalleryResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

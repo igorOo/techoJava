@@ -6,8 +6,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.entities.Category;
-import ru.technoteinfo.site.entities.PostsType;
-import ru.technoteinfo.site.pojo.CategoryResponse;
+import ru.technoteinfo.site.pojo.response.CategoryResponse;
 import ru.technoteinfo.site.repositories.CategoryRepo;
 
 import java.io.*;
@@ -15,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service

@@ -5,17 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
-import ru.technoteinfo.site.repositories.PostsRepo;
-import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
+import ru.technoteinfo.site.repositories.impl.PostsRepositoryImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SearchService {
 
     @Autowired
-    private PostsRepoImpl postsRepoImpl;
+    private PostsRepositoryImpl postsRepoImpl;
 
     @Autowired
     private CommonController commonController;

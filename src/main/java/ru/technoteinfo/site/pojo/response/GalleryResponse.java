@@ -1,11 +1,8 @@
-package ru.technoteinfo.site.pojo;
+package ru.technoteinfo.site.pojo.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.technoteinfo.site.entities.Category;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import ru.technoteinfo.site.pojo.response.CategoryResponse;
 
 @Data
 @AllArgsConstructor

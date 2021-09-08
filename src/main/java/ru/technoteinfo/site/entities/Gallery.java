@@ -1,11 +1,10 @@
 package ru.technoteinfo.site.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.technoteinfo.site.pojo.CategoryResponse;
-import ru.technoteinfo.site.pojo.GalleryResponse;
+import ru.technoteinfo.site.pojo.response.CategoryResponse;
+import ru.technoteinfo.site.pojo.response.GalleryResponse;
 
 import javax.persistence.*;
 import java.util.Date;

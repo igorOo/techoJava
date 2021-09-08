@@ -10,7 +10,7 @@ import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface PostsRepo {
+public interface PostsRepository {
     List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit);
     List<TopPost> findMainPosts(String translit, boolean author, boolean preview, int limit);
     List<TopPost> findMainPosts(Long id, boolean author, boolean preview, int limit, int start);

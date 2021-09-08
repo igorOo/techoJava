@@ -5,10 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
-import ru.technoteinfo.site.entities.Posts;
-import ru.technoteinfo.site.entities.PostsTags;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
-import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
+import ru.technoteinfo.site.repositories.HotNewsRepository;
+import ru.technoteinfo.site.repositories.impl.PostsRepositoryImpl;
 
 import java.util.List;
 
@@ -17,10 +16,13 @@ import java.util.List;
 @Slf4j
 public class NewsService extends DetailService{
     @Autowired
-    private PostsRepoImpl postsRepo;
+    private PostsRepositoryImpl postsRepo;
 
     @Autowired
     private CommonController common;
+
+    @Autowired
+    private HotNewsRepository hotNewsRepository;
 
     public List<TopPost> findTopReaderPosts(){
         List<TopPost> list = postsRepo.findTopReaderPosts(false, true, 6, 1L);
@@ -33,4 +35,6 @@ public class NewsService extends DetailService{
         common.formatMeta(list);
         return list;
     }
+
+
 }
