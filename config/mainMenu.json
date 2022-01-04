@@ -1,1 +1,114 @@
-[{"label":"Главная","url":"/"},{"children":[{"translit":"gadgets","name":"Гаджеты","id":19},{"translit":"hardware","name":"Железо","id":13},{"translit":"internet","name":"Интернет","id":11},{"translit":"programs","name":"Программы","id":10},{"translit":"in-world","name":"В мире","id":12},{"translit":"auto","name":"Авто","id":7},{"translit":"games","name":"Игры","id":18},{"translit":"any","name":"Разное","id":8}],"label":"Новости","url":"/news"},{"children":[{"translit":"web","name":"WEB","id":28},{"translit":"administrirovaniye","name":"Администрирование","id":29}],"label":"Статьи","url":"/notes"},{"children":[{"translit":"priroda","name":"Природа","id":20},{"translit":"devushki","name":"Девушки","id":21},{"translit":"avtomobili","name":"Автомобили","id":22},{"translit":"zhivotnyye","name":"Животные","id":23},{"translit":"igry","name":"Игры","id":24},{"translit":"anime","name":"Аниме","id":25},{"translit":"goroda","name":"Города","id":26},{"translit":"grafika","name":"Графика","id":27}],"label":"Обои на рабочий стол","url":"/gallery"},{"label":"Архив","url":"/archive"}]
+[
+  {
+    "label": "Главная",
+    "url": "/"
+  },
+  {
+    "children": [
+      {
+        "translit": "gadgets",
+        "name": "Гаджеты",
+        "id": 19
+      },
+      {
+        "translit": "hardware",
+        "name": "Железо",
+        "id": 13
+      },
+      {
+        "translit": "internet",
+        "name": "Интернет",
+        "id": 11
+      },
+      {
+        "translit": "programs",
+        "name": "Программы",
+        "id": 10
+      },
+      {
+        "translit": "in-world",
+        "name": "В мире",
+        "id": 12
+      },
+      {
+        "translit": "auto",
+        "name": "Авто",
+        "id": 7
+      },
+      {
+        "translit": "games",
+        "name": "Игры",
+        "id": 18
+      },
+      {
+        "translit": "any",
+        "name": "Разное",
+        "id": 8
+      }
+    ],
+    "label": "Новости",
+    "url": "/news"
+  },
+  {
+    "children": [
+      {
+        "translit": "web",
+        "name": "WEB",
+        "id": 28
+      },
+      {
+        "translit": "administrirovaniye",
+        "name": "Администрирование",
+        "id": 29
+      }
+    ],
+    "label": "Статьи",
+    "url": "/notes"
+  },
+  {
+    "children": [
+      {
+        "translit": "priroda",
+        "name": "Природа",
+        "id": 20
+      },
+      {
+        "translit": "devushki",
+        "name": "Девушки",
+        "id": 21
+      },
+      {
+        "translit": "avtomobili",
+        "name": "Автомобили",
+        "id": 22
+      },
+      {
+        "translit": "zhivotnyye",
+        "name": "Животные",
+        "id": 23
+      },
+      {
+        "translit": "igry",
+        "name": "Игры",
+        "id": 24
+      },
+      {
+        "translit": "anime",
+        "name": "Аниме",
+        "id": 25
+      },
+      {
+        "translit": "goroda",
+        "name": "Города",
+        "id": 26
+      },
+      {
+        "translit": "grafika",
+        "name": "Графика",
+        "id": 27
+      }
+    ],
+    "label": "Обои на рабочий стол",
+    "url": "/gallery"
+  }
+]

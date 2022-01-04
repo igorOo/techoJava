@@ -1,36 +1,25 @@
 package ru.technoteinfo.site.services;
 
 import javassist.NotFoundException;
-import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.security.util.InMemoryResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
-import ru.technoteinfo.site.controllers.common.FilesController;
 import ru.technoteinfo.site.entities.Gallery;
-import ru.technoteinfo.site.pojo.GalleryDownloadRequest;
+import ru.technoteinfo.site.pojo.request.GalleryDownloadRequest;
 import ru.technoteinfo.site.repositories.GalleryRepository;
 import ru.technoteinfo.site.services.common.FilesService;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class StorageService {

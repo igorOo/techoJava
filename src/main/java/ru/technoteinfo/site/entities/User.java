@@ -2,16 +2,15 @@ package ru.technoteinfo.site.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonValueInstantiator;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import ru.technoteinfo.site.entities.Enums.GenderEnum;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class User implements Serializable {
 
     @Column(name = "auth_key")
     @JsonIgnore
-    private String auth_key;
+    private String authKey;
 
     @Column(name = "access_token")
     @JsonIgnore
@@ -80,7 +79,7 @@ public class User implements Serializable {
 
     @Column(name = "id_social")
     @JsonView(JsonViewer.Internal.class)
-    private String id_social;
+    private String idSocial;
 
     @Column(name = "public")
     @JsonView(JsonViewer.Internal.class)
@@ -88,15 +87,15 @@ public class User implements Serializable {
 
     @Column(name = "date_create")
     @JsonView(JsonViewer.Internal.class)
-    private Date date_create;
+    private Date dateCreate;
 
     @Column(name = "date_edit")
     @JsonView(JsonViewer.Internal.class)
-    private Date date_edit;
+    private Date dateEdit;
 
     @Column(name = "last_visit")
     @JsonView(JsonViewer.Internal.class)
-    private Date last_visit;
+    private Date lastVisit;
 
     @OneToMany()
     @JoinTable(name = "user_roles",
@@ -104,7 +103,7 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id", insertable = false, updatable = false)
     )
     @JsonIgnore
-    private List<Roles> roles;
+    private List<Roles> roles = new ArrayList<>();
 
     private String about;
 

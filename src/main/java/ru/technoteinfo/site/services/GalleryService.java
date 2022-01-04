@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Gallery;
-import ru.technoteinfo.site.pojo.GalleryResponse;
+import ru.technoteinfo.site.pojo.response.GalleryResponse;
 import ru.technoteinfo.site.repositories.GalleryRepository;
 
 import java.io.*;

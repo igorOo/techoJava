@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Posts;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
-import ru.technoteinfo.site.pojo.NextPrevResponse;
-import ru.technoteinfo.site.repositories.impl.PostsRepoImpl;
+import ru.technoteinfo.site.pojo.response.NextPrevResponse;
+import ru.technoteinfo.site.repositories.impl.PostsRepositoryImpl;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class DetailService {
 
     @Autowired
-    private PostsRepoImpl postsRepo;
+    private PostsRepositoryImpl postsRepo;
 
     @Autowired
     private CommonController common;

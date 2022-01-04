@@ -1,14 +1,13 @@
 package ru.technoteinfo.site.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.technoteinfo.site.entities.Enums.GenderEnum;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -49,8 +48,8 @@ public class TechnoUserDetail implements UserDetails {
         this.avatar = user.getAvatar();
         this.birthDate = user.getBirth();
         this.gender = user.getGender();
-        this.lastVisit = user.getLast_visit();
-        this.dateCreate = user.getDate_create();
+        this.lastVisit = user.getLastVisit();
+        this.dateCreate = user.getDateCreate();
     }
 
     @Override

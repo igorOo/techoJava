@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,12 +21,12 @@ public class UserRoles {
 
     @Column(name = "role_id", updatable = false, insertable = false)
     @OneToMany
-    private List<Roles> roleIdList;
+    private List<Roles> roleIdList = new ArrayList<>();
 
     @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "user_id", updatable = false, insertable = false)
     @OneToMany
-    private List<User> userIdList;
+    private List<User> userIdList = new ArrayList<>();
 }

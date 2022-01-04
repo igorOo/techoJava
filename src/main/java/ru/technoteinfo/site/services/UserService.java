@@ -6,8 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.technoteinfo.site.controllers.common.CommonController;
-import ru.technoteinfo.site.controllers.common.FilesController;
-import ru.technoteinfo.site.entities.GenderEnum;
+import ru.technoteinfo.site.entities.Enums.GenderEnum;
 import ru.technoteinfo.site.entities.Roles;
 import ru.technoteinfo.site.entities.User;
 import ru.technoteinfo.site.entities.UserRoles;
@@ -20,13 +19,8 @@ import ru.technoteinfo.site.services.common.SftpService;
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,10 +101,10 @@ public class UserService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        user.setAuth_key(CommonController.randomString(25));
+        user.setAuthKey(CommonController.randomString(25));
         user.setStatus(0);
-        user.setDate_create(new Date());
-        user.setDate_edit(new Date());
+        user.setDateCreate(new Date());
+        user.setDateEdit(new Date());
 
         try {
             userRepository.save(user);
@@ -126,6 +120,16 @@ public class UserService {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public User checkActivate(String code) {
+        User user = userRepository.findByAuthKey(code);
+        if (user != null){
+            user.setStatus(1);
+            userRepository.save(user);
+            return user;
+        }
+        return null;
     }
 }
 

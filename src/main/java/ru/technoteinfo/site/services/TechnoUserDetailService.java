@@ -25,4 +25,13 @@ public class TechnoUserDetailService implements UserDetailsService {
         }
         return new TechnoUserDetail(user);
     }
+
+    @Transactional
+    public TechnoUserDetail loadUserByAuthToken(String authToken) throws UsernameNotFoundException {
+        User user = userRepository.findByAuthKey(authToken);
+        if (user == null){
+            throw new UsernameNotFoundException("Пользователь не найден");
+        }
+        return new TechnoUserDetail(user);
+    }
 }

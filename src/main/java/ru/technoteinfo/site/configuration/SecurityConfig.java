@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.technoteinfo.site.configuration.jwt.AuthEntryPointJwt;
 import ru.technoteinfo.site.configuration.jwt.AuthTokenFilter;
+import ru.technoteinfo.site.configuration.jwt.ConfirmEmailAuthenticationToken;
+import ru.technoteinfo.site.configuration.jwt.provider.EmailTokenAuthenticationProvider;
 import ru.technoteinfo.site.services.TechnoUserDetailService;
 
 
@@ -34,6 +37,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter implements Web
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
+    @Autowired
+    private EmailTokenAuthenticationProvider emailTokenAuthenticationProvider;
+
     @Bean
     public AuthTokenFilter authTokenFilter(){
         return new AuthTokenFilter();
@@ -48,6 +54,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter implements Web
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(technoUserDetailService).passwordEncoder(getPasswordEncoder());
+        auth.authenticationProvider(emailTokenAuthenticationProvider);
     }
 
     @Bean
@@ -62,7 +69,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter implements Web
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/profile/**").hasAnyRole("ADMIN", "USER")
-//                .antMatchers("/api/v1/comments/**/addcomment").authenticated()
+                .antMatchers("/api/v1/comments/**/addcomment").authenticated()
                 .antMatchers("/**").permitAll();
 //                .antMatchers("/secured/**").hasAnyRole("ADMIN")
 //                .and()

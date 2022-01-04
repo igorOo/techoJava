@@ -1,16 +1,15 @@
 package ru.technoteinfo.site.entities;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.technoteinfo.site.entities.queriesmodels.JsonViewer;
 import ru.technoteinfo.site.entities.queriesmodels.TopPost;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class Posts implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
     @JsonView(JsonViewer.Public.class)
     private Long id;
 
@@ -85,7 +83,7 @@ public class Posts implements Serializable {
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @Column(insertable = false, updatable = false)
     @JsonView(JsonViewer.ExtendedPublic.class)
-    transient private List<PostsTags> tags;
+    transient private List<PostsTags> tags = new ArrayList<>();
 
     @Transient
     @JsonView(JsonViewer.DetailPost.class)
@@ -134,5 +132,4 @@ public class Posts implements Serializable {
         }
         return topPost;
     }
-
 }

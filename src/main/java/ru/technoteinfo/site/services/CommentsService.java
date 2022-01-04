@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.technoteinfo.site.controllers.common.CommonController;
 import ru.technoteinfo.site.entities.Comments;
-import ru.technoteinfo.site.pojo.CommentRequest;
+import ru.technoteinfo.site.pojo.request.CommentRequest;
 import ru.technoteinfo.site.repositories.CommentsRepository;
 import ru.technoteinfo.site.repositories.UserRepository;
 
